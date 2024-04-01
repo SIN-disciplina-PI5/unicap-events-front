@@ -1,0 +1,10 @@
+.main {
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 85vh;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
