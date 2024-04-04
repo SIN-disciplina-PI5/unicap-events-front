@@ -20,7 +20,7 @@ export default function User() {
                 const expiration = localStorage.getItem('expiration');
                 if (expiration && new Date(expiration) > new Date()) {
                     // Token válido, redirecionar para outra página protegida
-                    router.push("/");
+                    router.push('/');
                 } else {
                     // Token expirado, limpar local storage e redirecionar para tela de login
                     localStorage.removeItem('accessToken');
