@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Button, Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
-import { Container, TitlePage, Title, ButtonWrapper, Main } from './style';
+import { Container, TitlePage, Title, ButtonWrapper, Main } from '../../styles/pages/events/style';
 import { format } from 'date-fns';
 import EventoDetails from '@/components/Modals/ModalEvents';
 import ModalCreateEvents from '@/components/Modals/ModalCreateEvents';

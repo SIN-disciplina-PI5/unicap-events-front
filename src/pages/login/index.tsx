@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from "next/head";
 import { Button, FormControl, FormLabel, Input, Spinner } from '@chakra-ui/react';
-import { Container, ImageContainer, LoginContainer, ButtonContainer } from './style';
+import { Container, ImageContainer, LoginContainer, ButtonContainer } from '../../styles/pages/login/style';
 
 export default function User() {
     const router = useRouter();

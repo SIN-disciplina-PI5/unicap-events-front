@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { Button } from '@chakra-ui/react'
-import { Container, TitlePage, Title, ButtonWrapper } from './style';
+import { Container, TitlePage, Title, ButtonWrapper } from '../../styles/pages/user/style';
 
 interface Evento {
     id: number;
