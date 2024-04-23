@@ -4,7 +4,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #6A0014;
+    background-color: white;
     border-radius: 10px;
 `
 

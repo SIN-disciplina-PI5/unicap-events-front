@@ -40,8 +40,8 @@ export function SideBar() {
 
     return (
         <>
-            <Button ref={btnRef} colorScheme='white' bg='white' onClick={onOpen}>
-                <Icon as={HamburgerIcon} color='#6A0014' />
+            <Button ref={btnRef} colorScheme='yellow' onClick={onOpen}>
+                <Icon as={HamburgerIcon} />
             </Button>
             <Drawer
                 isOpen={isOpen}
