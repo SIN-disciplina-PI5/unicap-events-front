@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from "next/head";
-import { Button, FormControl, FormLabel, Input, Spinner } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { Container, ImageContainer, LoginContainer, ButtonContainer } from '../../styles/pages/login/style';
 
 export default function User() {
@@ -13,20 +13,18 @@ export default function User() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        window.onload = () => {
-            const token = localStorage.getItem('accessToken');
-            if (token) {
-                console.log("Token encontrado, redirecionando...");
-                const expiration = localStorage.getItem('expiration');
-                if (expiration && new Date(expiration) > new Date()) {
-                    // Token válido, redirecionar para outra página protegida
-                    router.push('/');
-                } else {
-                    // Token expirado, limpar local storage e redirecionar para tela de login
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('expiration');
-                    router.push('/login');
-                }
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            console.log("Token encontrado, redirecionando...");
+            const expiration = localStorage.getItem('expiration');
+            if (expiration && new Date(expiration) > new Date()) {
+                // Token válido, redirecionar para outra página protegida
+                router.push('/');
+            } else {
+                // Token expirado, limpar local storage e redirecionar para tela de login
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('expiration');
+                router.push('/login');
             }
         }
     }, []);
@@ -83,7 +81,7 @@ export default function User() {
                                     mt={4}
                                     colorScheme='yellow'
                                     type='submit'
-                                    isLoading={loading} // Define o estado de loading do botão
+                                    isLoading={loading}
                                 >
                                     Entrar
                                 </Button>

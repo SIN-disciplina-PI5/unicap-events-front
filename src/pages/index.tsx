@@ -12,7 +12,6 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      // Se não houver token, redirecionar para a tela de login
       router.push('/login');
     }
   }, []);
