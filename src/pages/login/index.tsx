@@ -33,11 +33,15 @@ export default function User() {
         e.preventDefault();
         setLoading(true); // Define o estado de loading como true
         try {
-            const response = await axios.post('https://unicap-events.vercel.app/auth/login', {
-                email: email,
-                password: password
-            });
-            const token = response.data.user.stsTokenManager.accessToken;
+            // Faz o login sem autenticação
+            // const response = await axios.post('https://unicap-events-backend.vercel.app/auth/login', {
+            //     email: email,
+            //     password: password
+            // });
+
+            // Simulando um login bem-sucedido
+            // const token = response.data.user.stsTokenManager.accessToken;
+            const token = "um-token-gerado"; // Simulando um token
             const expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // Expira em um dia
             // Armazenar o token e a data de expiração no local storage
             localStorage.setItem('accessToken', token);

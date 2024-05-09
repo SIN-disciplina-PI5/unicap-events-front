@@ -5,21 +5,18 @@ import Head from 'next/head';
 import { Button, Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { Container, TitlePage, Title, ButtonWrapper, Main } from '../../styles/pages/events/style';
 import { format } from 'date-fns';
-import EventoDetails from '@/components/Modals/ModalEvents';
 import ModalCreateEvents from '@/components/Modals/ModalCreateEvents';
 
 interface Evento {
     id: number;
-    nome: string;
-    data: string;
-    capacidade: number;
-    categoria: string;
+    name: string;
+    start_date: string;
+    description: number;
 }
 
 export default function Events() {
     const [eventos, setEventos] = useState<Evento[]>([]);
     const [loading, setLoading] = useState(false);
-    const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const router = useRouter();
 
@@ -35,13 +32,9 @@ export default function Events() {
     const fetchEventos = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('https://unicap-events.vercel.app/eventos', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            });
-            if (Array.isArray(response.data.data)) {
-                setEventos(response.data.data);
+            const response = await axios.get(`${process.env.BACKEND_URL}/event/`);
+            if (Array.isArray(response.data)) {
+                setEventos(response.data);
             }
         } catch (error) {
             console.error('Ocorreu um erro:', error);
@@ -51,11 +44,7 @@ export default function Events() {
     };
 
     const handleEventoClick = (eventId: number) => {
-        setSelectedEventId(eventId);
-    };
-
-    const handleCloseEventoDetails = () => {
-        setSelectedEventId(null);
+        router.push(`/events/${eventId}`);
     };
 
     const handleOpenModalCreate = () => {
@@ -103,17 +92,15 @@ export default function Events() {
                                     <Tr>
                                         <Th>Nome</Th>
                                         <Th>Dia</Th>
-                                        <Th>Capacidade</Th>
-                                        <Th>Categoria</Th>
+                                        <Th>Descrição</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
                                     {eventos.map(evento => (
-                                        <Tr key={evento.id} onClick={() => handleEventoClick(evento.id)}>
-                                            <Td>{evento.nome}</Td>
-                                            <Td>{format(new Date(evento.data), 'dd/MM/yyyy')}</Td>
-                                            <Td>{evento.capacidade}</Td>
-                                            <Td>{evento.categoria}</Td>
+                                        <Tr key={evento.id} onClick={() => handleEventoClick(evento.id)} style={{ cursor: 'pointer' }}>
+                                            <Td>{evento.name}</Td>
+                                            <Td>{format(new Date(evento.start_date), 'dd/MM/yyyy')}</Td>
+                                            <Td>{evento.description}</Td>
                                         </Tr>
                                     ))}
                                 </Tbody>
@@ -121,8 +108,8 @@ export default function Events() {
                         )}
                     </TableContainer>
 
-                    <EventoDetails eventId={selectedEventId} onClose={handleCloseEventoDetails} />
                     <ModalCreateEvents isOpen={isModalCreateOpen} onClose={handleCloseModalCreate} />
+
                 </Container>
             </Main>
         </>

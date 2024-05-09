@@ -6,11 +6,9 @@ import { format } from 'date-fns';
 interface Evento {
     data: {
         id: number;
-        nome: string;
-        data: string;
-        descricao: string;
-        capacidade: number;
-        categoria: string;
+        name: string;
+        start_date: string;
+        description: number;
     }
 }
 
@@ -33,7 +31,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
                 }
 
                 setLoading(true); // Ativando o estado de carregamento
-                const response = await axios.get(`https://unicap-events.vercel.app/eventos/${eventId}`, {
+                const response = await axios.get(`${process.env.BACKEND_URL}/event/${eventId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Adicione o token de autenticação ao cabeçalho
                     },
@@ -67,15 +65,13 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
             }
 
             const dataToSend = {
-                nome: evento.data.nome,
-                data: evento.data.data,
-                descricao: evento.data.descricao,
-                capacidade: evento.data.capacidade,
-                categoria: evento.data.categoria
+                name: evento.data.name,
+                start_date: evento.data.start_date,
+                description: evento.data.description,
             };
 
             setLoading(true); // Ativando o estado de carregamento durante a requisição
-            await axios.put(`https://unicap-events.vercel.app/eventos/${evento.data.id}`, dataToSend, {
+            await axios.put(`${process.env.BACKEND_URL}/event/${evento.data.id}`, dataToSend, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -101,7 +97,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
             }
 
             setLoading(true); // Ativando o estado de carregamento durante a requisição
-            await axios.delete(`https://unicap-events.vercel.app/eventos/${evento.data.id}`, {
+            await axios.delete(`${process.env.BACKEND_URL}/event/${evento.data.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -132,11 +128,9 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
                     ) : (
                         evento ? (
                             <div>
-                                <p><strong>Nome:</strong> <Input name="nome" value={evento.data.nome} marginTop="20px" /></p>
-                                <p><strong>Data:</strong> <Input name="data" value={format(new Date(evento.data.data), 'dd/MM/yyyy')} marginTop="20px" /></p>
-                                <p><strong>Descrição:</strong> <Input name="descricao" value={evento.data.descricao ?? ''} marginTop="20px" /></p>
-                                <p><strong>Capacidade:</strong> <Input name="capacidade" value={evento.data.capacidade ?? ''} marginTop="20px" /></p>
-                                <p><strong>Categoria:</strong> <Input name="categoria" value={evento.data.categoria} marginTop="20px" /></p>
+                                <p><strong>Nome:</strong> <Input name="nome" value={evento.data.name} marginTop="20px" /></p>
+                                <p><strong>Data:</strong> <Input name="data" value={format(new Date(evento.data.start_date), 'dd/MM/yyyy')} marginTop="20px" /></p>
+                                <p><strong>Descrição:</strong> <Input name="descricao" value={evento.data.description ?? ''} marginTop="20px" /></p>
                             </div>
                         ) : (
                             <p>erro ao carregar</p>
