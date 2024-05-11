@@ -24,7 +24,6 @@ export function SideBar() {
         { label: "Início", path: "/" },
         { label: "Usuários", path: "/user" },
         { label: "Eventos", path: "/events" },
-        { label: "Ingressos", path: "/tickets" },
     ];
 
     const handleLogout = () => {
@@ -40,8 +39,8 @@ export function SideBar() {
 
     return (
         <>
-            <Button ref={btnRef} colorScheme='yellow' onClick={onOpen}>
-                <Icon as={HamburgerIcon} />
+            <Button ref={btnRef} colorScheme='white' bg='white' onClick={onOpen}>
+                <Icon as={HamburgerIcon} color='#6A0014' />
             </Button>
             <Drawer
                 isOpen={isOpen}
@@ -82,8 +81,8 @@ export function SideBar() {
                     <DrawerFooter>
                         <Button
                             variant="solid"
-                            fontWeight={"700"}
-                            colorScheme="yellow"
+                            bg="#6A0014"
+                            color="white"
                             mt={16}
                             onClick={handleLogout}
                         >

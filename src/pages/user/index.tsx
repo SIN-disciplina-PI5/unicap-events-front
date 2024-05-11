@@ -1,29 +1,74 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useRouter } from 'next/router';
-import Head from "next/head";
+import Head from 'next/head';
 import styles from "@/styles/Home.module.css";
-import { Button } from '@chakra-ui/react'
+import { Button, Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { Container, TitlePage, Title, ButtonWrapper } from '../../styles/pages/user/style';
+import UserModal from '@/components/Modals/ModalUser';
+import ModalCreateUser from '@/components/Modals/ModalCreateUser';
 
-interface Evento {
+interface Usuario {
     id: number;
-    nome: string;
-    data: string;
-    capacidade: number;
-    categoria: string;
+    name: string;
+    email: string;
+    phone: string;
+    type: string;
+    permission: string;
+    ra: string;
 }
 
 export default function User() {
+    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState<number | null>(null); // Estado para armazenar o ID do usuário selecionado
+    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar se o modal está aberto
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false); // Estado para controlar se o modal de criar usuário está aberto
     const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         if (!token) {
-            // Se não houver token, redirecionar para a tela de login
             router.push('/login');
+        } else {
+            fetchUsuarios();
         }
     }, []);
 
+    const fetchUsuarios = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${process.env.BACKEND_URL}/user/`);
+            if (Array.isArray(response.data.data)) {
+                setUsuarios(response.data.data);
+            }
+        } catch (error) {
+            console.error('Ocorreu um erro:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true); // Abre o modal
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Fecha o modal
+    };
+
+    const handleUserClick = (userId: number) => {
+        setSelectedUserId(userId); // Armazena o ID do usuário clicado
+        handleOpenModal(); // Abre o modal
+    };
+
+    const handleOpenCreateModal = () => {
+        setIsCreateModalOpen(true); // Abre o modal de criar usuário
+    };
+
+    const handleCloseCreateModal = () => {
+        setIsCreateModalOpen(false); // Fecha o modal de criar usuário
+    };
 
     return (
         <>
@@ -33,18 +78,60 @@ export default function User() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={styles.main}>
+            <main className={`${styles.main}`}>
                 <Container>
                     <TitlePage>
                         <Title>
                             Gerenciamento de usuários
                         </Title>
                         <ButtonWrapper>
-                            <Button colorScheme='yellow'>+ <span>Adicionar usuário</span></Button>
+                            <Button bg="#6A0014" color="white" onClick={handleOpenCreateModal}>+ <span>Adicionar usuário</span></Button>
                         </ButtonWrapper>
                     </TitlePage>
 
+                    <TableContainer>
+                        {loading ? (
+                            <Flex justify="center" align="center" height="600px">
+                                <Spinner
+                                    thickness='10px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    width={150}
+                                    height={150}
+                                    color='red.500' />
+                            </Flex>
+                        ) : (
+                            <Table variant='striped' colorScheme='gray'>
+                                <TableCaption>Tabela de Usuários</TableCaption>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Nome</Th>
+                                        <Th>Email</Th>
+                                        <Th>Telefone</Th>
+                                        <Th>RA</Th>
+                                        <Th>Tipo</Th>
+                                        <Th>Permissão</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {usuarios.map(usuario => (
+                                        <Tr key={usuario.id} onClick={() => handleUserClick(usuario.id)}>
+                                            <Td>{usuario.name}</Td>
+                                            <Td>{usuario.email}</Td>
+                                            <Td>{usuario.phone}</Td>
+                                            <Td>{usuario.ra}</Td>
+                                            <Td>{usuario.type}</Td>
+                                            <Td>{usuario.permission}</Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        )}
+                    </TableContainer>
                 </Container>
+
+                <UserModal isOpen={isModalOpen} userId={selectedUserId} onClose={handleCloseModal} />
+                <ModalCreateUser isOpen={isCreateModalOpen} onClose={handleCloseCreateModal} />
             </main>
         </>
     );

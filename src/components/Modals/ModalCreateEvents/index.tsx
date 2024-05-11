@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface ModalCreateEventsProps {
     isOpen: boolean;
     onClose: () => void;
+    onUpdateEvents: () => void; // Função para atualizar a lista de eventos após a criação
 }
 
-const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose }) => {
+const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, onUpdateEvents }) => {
     const initialFormData = {
-        usuario_id: 2,
-        nome: '',
-        data: '',
-        local_id: 4,
-        descricao: '',
-        capacidade: '',
-        categoria: '',
+        name: '',
+        description: '',
+        start_date: '',
+        end_date: ''
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -38,13 +36,21 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose }
                 return;
             }
 
-            const response = await axios.post('https://unicap-events-backend.vercel.app/events', formData, {
+            // Formatar as datas para o formato esperado pela API (YYYY-MM-DD HH:MM:SS)
+            const formattedFormData = {
+                ...formData,
+                start_date: formData.start_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
+                end_date: formData.end_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
+            };
+
+            const response = await axios.post(`${process.env.BACKEND_URL}/event/`, formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
             console.log('Evento criado com sucesso:', response.data);
             resetForm(); // Chama a função para redefinir os campos do formulário
+            onUpdateEvents(); // Atualiza a lista de eventos após a criação do evento
             onClose(); // Fecha o modal após a criação do evento
         } catch (error) {
             console.error('Ocorreu um erro ao criar o evento:', error);
@@ -65,11 +71,16 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose }
                 <ModalHeader>Adicionar Evento</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Input name="nome" placeholder="Nome do evento" value={formData.nome} onChange={handleInputChange} marginTop="20px" />
-                    <Input name="data" type="date" placeholder="Data do evento" value={formData.data} onChange={handleInputChange} marginTop="20px" />
-                    <Input name="descricao" placeholder="Descrição do evento" value={formData.descricao} onChange={handleInputChange} marginTop="20px" />
-                    <Input name="capacidade" type="number" placeholder="Capacidade do evento" value={formData.capacidade} onChange={handleInputChange} marginTop="20px" />
-                    <Input name="categoria" placeholder="Categoria do evento" value={formData.categoria} onChange={handleInputChange} marginTop="20px" />
+                    <Input name="name" placeholder="Nome do evento" value={formData.name} onChange={handleInputChange} marginTop="20px" />
+                    <Input name="description" placeholder="Descrição do evento" value={formData.description} onChange={handleInputChange} marginTop="20px" />
+                    <FormControl marginTop="20px">
+                        <FormLabel>Data e Hora Inicial</FormLabel>
+                        <Input name="start_date" type="datetime-local" value={formData.start_date} onChange={handleInputChange} />
+                    </FormControl>
+                    <FormControl marginTop="20px">
+                        <FormLabel>Data e Hora Final</FormLabel>
+                        <Input name="end_date" type="datetime-local" value={formData.end_date} onChange={handleInputChange} />
+                    </FormControl>
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="red" mr={3} onClick={onClose}>

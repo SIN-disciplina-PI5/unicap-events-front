@@ -83,7 +83,8 @@ export default function User() {
                             <ButtonContainer>
                                 <Button
                                     mt={4}
-                                    colorScheme='yellow'
+                                    bg="#6A0014"
+                                    color="white"
                                     type='submit'
                                     isLoading={loading}
                                 >

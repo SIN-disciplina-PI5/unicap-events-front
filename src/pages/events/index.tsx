@@ -55,6 +55,9 @@ export default function Events() {
         setIsModalCreateOpen(false);
     };
 
+    const handleUpdateEvents = () => {
+        fetchEventos();
+    };
     return (
         <>
             <Head>
@@ -70,7 +73,7 @@ export default function Events() {
                             Gerenciamento de Eventos
                         </Title>
                         <ButtonWrapper>
-                            <Button colorScheme='yellow' onClick={handleOpenModalCreate}>+ <span>Adicionar evento</span></Button>
+                            <Button bg="#6A0014" color="white" onClick={handleOpenModalCreate}>+ <span>Adicionar evento</span></Button>
                         </ButtonWrapper>
                     </TitlePage>
 
@@ -83,7 +86,7 @@ export default function Events() {
                                     emptyColor='gray.200'
                                     width={150}
                                     height={150}
-                                    color='yellow.500' />
+                                    color='red.500' />
                             </Flex>
                         ) : (
                             <Table variant='striped' colorScheme='gray'>
@@ -108,8 +111,7 @@ export default function Events() {
                         )}
                     </TableContainer>
 
-                    <ModalCreateEvents isOpen={isModalCreateOpen} onClose={handleCloseModalCreate} />
-
+                    <ModalCreateEvents isOpen={isModalCreateOpen} onClose={handleCloseModalCreate} onUpdateEvents={handleUpdateEvents} />
                 </Container>
             </Main>
         </>

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import { TitlePageHome, MainHome } from "@/styles/pages/events/style";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-
-        <h1>Início</h1>
-
-      </main>
+      <MainHome className={`${styles.main} ${inter.className}`}>
+        <TitlePageHome className={`${styles.h1}`}>
+          Bem vindo ao unicap events!
+        </TitlePageHome>
+      </MainHome>
     </>
   );
 }
+
