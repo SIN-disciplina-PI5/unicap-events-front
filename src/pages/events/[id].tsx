@@ -102,7 +102,7 @@ const EventoDetailsPage: React.FC = () => {
                     emptyColor='gray.200'
                     width={150}
                     height={150}
-                    color='yellow.500' />
+                    color='red.500' />
             </Flex>
         );
     }

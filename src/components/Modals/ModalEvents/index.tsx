@@ -123,7 +123,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
                 <ModalBody>
                     {loading ? (
                         <Flex justify="center" align="center" height="60px">
-                            <Spinner size="xl" color="yellow.500" />
+                            <Spinner size="xl" color="red.500" />
                         </Flex>
                     ) : (
                         evento ? (
@@ -138,7 +138,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
                     )}
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='yellow' mr={3} onClick={onClose}>
+                    <Button colorScheme='red' mr={3} onClick={onClose}>
                         Fechar
                     </Button>
                     <Button colorScheme='red' mr={3} onClick={handleDelete}>

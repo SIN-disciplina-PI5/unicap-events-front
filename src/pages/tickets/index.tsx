@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Button, Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { Container, TitlePage, Title, ButtonWrapper, Main } from '../../styles/pages/events/style';
-import { format } from 'date-fns';
 import EventoDetails from '@/components/Modals/ModalEvents';
 import ModalCreateEvents from '@/components/Modals/ModalCreateEvents';
 
@@ -81,7 +80,7 @@ export default function Events() {
                             Gerenciamento de Eventos
                         </Title>
                         <ButtonWrapper>
-                            <Button colorScheme='yellow' onClick={handleOpenModalCreate}>+ <span>Adicionar evento</span></Button>
+                            <Button bg="#6A0014" color="white" onClick={handleOpenModalCreate}>+ <span>Adicionar Igresso</span></Button>
                         </ButtonWrapper>
                     </TitlePage>
 
@@ -94,7 +93,7 @@ export default function Events() {
                                     emptyColor='gray.200'
                                     width={150}
                                     height={150}
-                                    color='yellow.500' />
+                                    color='red.500' />
                             </Flex>
                         ) : (
                             <Table variant='striped' colorScheme='gray'>
