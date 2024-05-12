@@ -132,7 +132,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                     )}
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='red' mr={3} onClick={onClose}>
+                    <Button colorScheme='yellow' mr={3} onClick={onClose}>
                         Fechar
                     </Button>
                     <Button colorScheme='red' mr={3} onClick={handleDelete}>

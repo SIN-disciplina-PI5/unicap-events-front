@@ -73,7 +73,7 @@ export default function Events() {
                             Gerenciamento de Eventos
                         </Title>
                         <ButtonWrapper>
-                            <Button bg="#6A0014" color="white" onClick={handleOpenModalCreate}>+ <span>Adicionar evento</span></Button>
+                            <Button bg="#6A0014" color="white" _hover={{ bg: 'red.500' }} onClick={handleOpenModalCreate}>+ <span>Adicionar evento</span></Button>
                         </ButtonWrapper>
                     </TitlePage>
 

@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { Button, Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { Container, TitlePage, Title, ButtonWrapper, Main } from '../../styles/pages/events/style';
 import EventoDetails from '@/components/Modals/ModalEvents';
-import ModalCreateEvents from '@/components/Modals/ModalCreateEvents';
 
 interface Evento {
     id: number;
@@ -120,7 +119,6 @@ export default function Events() {
                     </TableContainer>
 
                     <EventoDetails eventId={selectedEventId} onClose={handleCloseEventoDetails} />
-                    <ModalCreateEvents isOpen={isModalCreateOpen} onClose={handleCloseModalCreate} />
                 </Container>
             </Main>
         </>

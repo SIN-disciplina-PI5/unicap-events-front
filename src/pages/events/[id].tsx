@@ -2,24 +2,40 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { Spinner, Flex } from '@chakra-ui/react';
-import { Container, TitlePage, Title, Main } from '../../styles/pages/events/style';
+import { Container, TitlePageId, TitleId, Main } from '../../styles/pages/events/style';
+import { Button, Spinner, Table, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { format } from 'date-fns';
+import EventoDetails from '@/components/Modals/ModalEvents';
 
 interface Evento {
     data: {
         id: number;
         name: string;
         start_date: string;
+        end_date: string;
         description: number;
     }
 }
 
+// interface SubEvento {
+//     data: {
+//         id: number;
+//         name: string;
+//         start_date: string;
+//         end_date: string;
+//         description: string;
+//     }
+// }
+
 const EventoDetailsPage: React.FC = () => {
     const [evento, setEvento] = useState<Evento | null>(null);
+    // const [subEventos, setSubEventos] = useState<SubEvento[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Estado para controlar a abertura do modal
     const router = useRouter();
     const { id } = router.query;
+
+    // console.log(subEventos, "oi")
 
     useEffect(() => {
         const fetchEvento = async () => {
@@ -43,54 +59,40 @@ const EventoDetailsPage: React.FC = () => {
             }
         };
 
+        // const fetchSubEventos = async () => {
+        //     try {
+        //         const token = localStorage.getItem('accessToken');
+        //         if (!token) {
+        //             return;
+        //         }
+
+        //         setLoading(true);
+        //         const response = await axios.get(`${process.env.BACKEND_URL}/sub-event/`, {
+        //             headers: {
+        //                 Authorization: `Bearer ${token}`,
+        //             },
+        //         });
+        //         setSubEventos(response.data);
+        //         setLoading(false);
+        //     } catch (error) {
+        //         console.error('Ocorreu um erro ao buscar os sub-eventos:', error);
+        //         setLoading(false);
+        //     }
+        // };
+
+
         if (id) {
             fetchEvento();
+            // fetchSubEventos();
         }
     }, [id]);
 
-    const handleUpdateEvento = async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
-            if (!token || !evento) {
-                return;
-            }
-
-            setLoading(true);
-            await axios.put(`${process.env.BACKEND_URL}/event/${id}`, evento, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setLoading(false);
-            // Se necessário, adicione lógica para notificar o usuário sobre a atualização bem-sucedida
-        } catch (error) {
-            console.error('Ocorreu um erro ao atualizar o evento:', error);
-            setLoading(false);
-            // Se necessário, adicione lógica para lidar com o erro
-        }
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
     };
 
-    const handleDeleteEvento = async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
-            if (!token || !id) {
-                return;
-            }
-
-            setLoading(true);
-            await axios.delete(`${process.env.BACKEND_URL}/event/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setLoading(false);
-            // Se necessário, adicione lógica para notificar o usuário sobre a exclusão bem-sucedida
-            router.push('/'); // Redireciona para a página inicial após a exclusão
-        } catch (error) {
-            console.error('Ocorreu um erro ao excluir o evento:', error);
-            setLoading(false);
-            // Se necessário, adicione lógica para lidar com o erro
-        }
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     if (loading || !evento) {
@@ -117,15 +119,44 @@ const EventoDetailsPage: React.FC = () => {
             </Head>
             <Main>
                 <Container>
-                    <TitlePage>
-                        <Title>{evento.data.name}</Title>
-                        <p>{format(new Date(evento.data.start_date), 'dd/MM/yyyy')}</p>
-                        <p>{evento.data.description}</p>
-                    </TitlePage>
-                    <button onClick={handleUpdateEvento}>Atualizar</button>
-                    <button onClick={handleDeleteEvento}>Excluir</button>
+                    <div>
+
+                        <TitlePageId>
+                            <TitleId>
+                                {evento.data.name}
+                            </TitleId>
+                            <p>Data e Hora Inicial: {format(new Date(evento.data.start_date), 'dd/MM/yyyy')}</p>
+                            <p>Data e Hora Final: {format(new Date(evento.data.end_date), 'dd/MM/yyyy')}</p>
+                            <p>Descrição: {evento.data.description}</p>
+                        </TitlePageId>
+                        <Button bg="#6A0014" color="white" _hover={{ bg: 'red.500' }} onClick={handleOpenModal}>Editar evento</Button>
+                    </div>
+                    {/* <div>
+                        <Table variant='striped' colorScheme='gray'>
+                            <Thead>
+                                <Tr>
+                                    <Th>Nome</Th>
+                                    <Th>Data Inicial</Th>
+                                    <Th>Data Final</Th>
+                                    <Th>Descrição</Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {subEventos.map(subEvento => (
+                                    <Tr key={subEvento.data.id}>
+                                        <Td>{subEvento.data.name}</Td>
+                                        <Td>{format(new Date(subEvento.data.start_date), 'dd/MM/yyyy')}</Td>
+                                        <Td>{format(new Date(subEvento.data.end_date), 'dd/MM/yyyy')}</Td>
+                                        <Td>{subEvento.data.description}</Td>
+                                    </Tr>
+                                ))}
+                            </Tbody>
+                        </Table>
+                    </div> */}
                 </Container>
             </Main>
+            {/* Renderize o modal apenas quando o estado isModalOpen for true */}
+            {isModalOpen && <EventoDetails eventId={Number(id)} onClose={handleCloseModal} />}
         </>
     );
 };

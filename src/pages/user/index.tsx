@@ -85,7 +85,7 @@ export default function User() {
                             Gerenciamento de usuários
                         </Title>
                         <ButtonWrapper>
-                            <Button bg="#6A0014" color="white" onClick={handleOpenCreateModal}>+ <span>Adicionar usuário</span></Button>
+                            <Button bg="#6A0014" _hover={{ bg: 'red.500' }} color="white" onClick={handleOpenCreateModal}>+ <span>Adicionar usuário</span></Button>
                         </ButtonWrapper>
                     </TitlePage>
 

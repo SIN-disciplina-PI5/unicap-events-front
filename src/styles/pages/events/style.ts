@@ -19,6 +19,21 @@ export const Title = styled.h1`
     font-weight: 500;
 `;
 
+export const TitlePageId = styled.div`
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    margin-bottom: 20px;
+    font-size: 18px;
+`;
+
+export const TitleId = styled.h1`
+    margin: 0;
+    font-size: 34px;
+    font-weight: 500;
+`;
+
+
 export const ButtonWrapper = styled.div`
     margin-left: auto;
     
