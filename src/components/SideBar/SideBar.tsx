@@ -22,6 +22,7 @@ export function SideBar() {
 
     const iconsNav = [
         { label: "Início", path: "/" },
+        { label: "Permissões", path: "/permissions" },
         { label: "Usuários", path: "/user" },
         { label: "Eventos", path: "/events" },
     ];

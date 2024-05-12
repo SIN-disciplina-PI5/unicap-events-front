@@ -24,7 +24,7 @@ export const Text = styled.p`
     font-size: 20px;
 
     &:hover {
-        background-color: #b5949b;
+        background-color: #DABEC3;
         border-radius: 10px;
     }
 `

@@ -15,3 +15,10 @@
   justify-content: center;
   align-items: center;
 }
+
+.buttonDiv{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
