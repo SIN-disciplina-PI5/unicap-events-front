@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { LoginContainer, ImageContainer, ButtonContainer,ContainerRegister } from '@/styles/pages/login/style';
 
@@ -85,6 +86,11 @@ const Register: React.FC = () => {
                             </ButtonContainer>
                         </FormControl>
                     </form>
+                    <Link href="/login">
+                        <p style={{ marginTop: '10px', display: 'block', textAlign: 'center', color: '#6A0014' }}>
+                        Já possui conta? Faça Login
+                        </p>
+                    </Link>
                 </LoginContainer>
             </ContainerRegister>
         </>
