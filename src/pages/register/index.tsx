@@ -77,6 +77,7 @@ const Register: React.FC = () => {
                                     bg="#6A0014"
                                     color="white"
                                     type="submit"
+                                    _hover={{ bg: 'red.500' }}
                                     isLoading={loading}
                                 >
                                     Cadastrar
