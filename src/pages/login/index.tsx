@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Head from "next/head";
+import Head from 'next/head';
+import Link from 'next/link';
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { Container, ImageContainer, LoginContainer, ButtonContainer } from '../../styles/pages/login/style';
 
@@ -93,6 +94,11 @@ export default function User() {
                             </ButtonContainer>
                         </FormControl>
                     </form>
+                    <Link href="/register">
+                        <p style={{ marginTop: '10px', display: 'block', textAlign: 'center', color: '#6A0014' }}>
+                            Não tem uma conta? Cadastre-se
+                        </p>
+                    </Link>
                 </LoginContainer>
             </Container>
         </>
