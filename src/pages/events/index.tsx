@@ -32,7 +32,7 @@ export default function Events() {
     const fetchEventos = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${process.env.BACKEND_URL}/event/`);
+            const response = await axios.get(`https://unicap-events-backend.vercel.app/event/`);
             if (Array.isArray(response.data)) {
                 setEventos(response.data);
             }

@@ -38,7 +38,7 @@ export default function User() {
     const fetchUsuarios = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${process.env.BACKEND_URL}/user/`);
+            const response = await axios.get(`https://unicap-events-backend.vercel.app/user/`);
             if (Array.isArray(response.data.data)) {
                 setUsuarios(response.data.data);
             }

@@ -43,7 +43,7 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, 
                 end_date: formData.end_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
             };
 
-            const response = await axios.post(`${process.env.BACKEND_URL}/event/`, formattedFormData, {
+            const response = await axios.post(`https://unicap-events-backend.vercel.app/event/`, formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
