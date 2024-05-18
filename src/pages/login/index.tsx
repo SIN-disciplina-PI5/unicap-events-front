@@ -16,7 +16,6 @@ export default function User() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         if (token) {
-            console.log("Token encontrado, redirecionando...");
             const expiration = localStorage.getItem('expiration');
             if (expiration && new Date(expiration) > new Date()) {
                 // Token válido, redirecionar para outra página protegida
@@ -34,24 +33,22 @@ export default function User() {
         e.preventDefault();
         setLoading(true); // Define o estado de loading como true
         try {
-            // Faz o login sem autenticação
-            // const response = await axios.post('https://unicap-events-backend.vercel.app/auth/login', {
-            //     email: email,
-            //     password: password
-            // });
+            const response = await axios.post('https://unicap-events-backend.vercel.app/auth/login', {
+                email: email,
+                password: password
+            });
 
-            // Simulando um login bem-sucedido
-            // const token = response.data.user.stsTokenManager.accessToken;
-            const token = "um-token-gerado"; // Simulando um token
+            const token = response.data.user.stsTokenManager.accessToken;
             const expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // Expira em um dia
             // Armazenar o token e a data de expiração no local storage
             localStorage.setItem('accessToken', token);
             localStorage.setItem('expiration', expiration.toISOString()); // Convertendo para string
+
             // Redirecionar para outra página protegida após o login
             router.push('/');
         } catch (error) {
             setError('Erro ao fazer login. Verifique suas credenciais.');
-            console.error('Ocorreu um erro:', error);
+
         } finally {
             setLoading(false); // Define o estado de loading como false após o login ou erro
         }
