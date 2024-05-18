@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { Button, Container, FormControl, FormLabel, Input } from '@chakra-ui/react';
-import { LoginContainer, ImageContainer, ButtonContainer } from '@/styles/pages/login/style';
+import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { LoginContainer, ImageContainer, ButtonContainer,ContainerRegister } from '@/styles/pages/login/style';
 
 const Register: React.FC = () => {
     const router = useRouter();
@@ -50,7 +50,7 @@ const Register: React.FC = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Container>
+            <ContainerRegister>
                 <LoginContainer>
                     <ImageContainer>
                         <img src="/humanitas.jfif" alt="Your Image" />
@@ -85,7 +85,7 @@ const Register: React.FC = () => {
                         </FormControl>
                     </form>
                 </LoginContainer>
-            </Container>
+            </ContainerRegister>
         </>
     );
 };

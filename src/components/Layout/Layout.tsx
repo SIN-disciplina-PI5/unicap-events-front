@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { SideBar } from "../SideBar/SideBar"
-import { WrapperSideBar, Container } from "./styles"
-import { Avatar } from '@chakra-ui/react'
+import { SideBar } from "../SideBar/SideBar";
+import { WrapperSideBar, Container } from "./styles";
+import { Avatar } from '@chakra-ui/react';
 
 interface ILayout {
     children: React.ReactNode;
@@ -21,11 +21,14 @@ const Layout: React.FC<ILayout> = ({ children, showLayout }) => {
         });
     }, [asPath]);
 
+    const isRegisterPage = asPath === '/register'; 
     const isLoginPage = asPath === '/login';
+
+    const shouldShowSidebar = showLayout && !isLoginPage && !isRegisterPage; 
 
     return (
         <div>
-            {!isLoginPage && showLayout && (
+            {shouldShowSidebar && (
                 <Box>
                     <Box ref={refContainer}>
                         <Box>
@@ -43,7 +46,7 @@ const Layout: React.FC<ILayout> = ({ children, showLayout }) => {
                     </Box>
                 </Box>
             )}
-            {isLoginPage && <div>{children}</div>}
+            {!shouldShowSidebar && <div>{children}</div>} 
         </div>
     );
 };
