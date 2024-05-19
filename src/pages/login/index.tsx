@@ -33,7 +33,7 @@ export default function User() {
         e.preventDefault();
         setLoading(true); // Define o estado de loading como true
         try {
-            const response = await axios.post('https://unicap-events-backend.vercel.app/auth/login', {
+            const response = await axios.post('https://unicap-events-back-end.vercel.app/auth/login', {
                 email: email,
                 password: password
             });

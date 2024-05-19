@@ -38,7 +38,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                 return;
             }
 
-            const response = await axios.post(`https://unicap-events-backend.vercel.app/user/`, formData, {
+            const response = await axios.post(`https://unicap-events-back-end.vercel.app/user/`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

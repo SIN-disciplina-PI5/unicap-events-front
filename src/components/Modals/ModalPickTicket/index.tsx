@@ -53,7 +53,7 @@ const ModalPickTicket: React.FC<ModalPickTicketProps> = ({ isOpen, onClose, even
                 tickets: Array.from({ length: formData.quantity }, () => ({ status: 'available' })),
             };
 
-            const response = await axios.post(`https://unicap-events-backend.vercel.app/sub-event/`, formattedFormData, {
+            const response = await axios.post(`https://unicap-events-back-end.vercel.app/sub-event/`, formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

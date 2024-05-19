@@ -32,7 +32,7 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
                     // Lógica para lidar com a falta de token
                     return;
                 }
-                const response = await axios.get(`https://unicap-events-backend.vercel.app/sub-event/${subEventId}`, {
+                const response = await axios.get(`https://unicap-events-back-end.vercel.app/sub-event/${subEventId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -87,7 +87,7 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
                 },
             };
 
-            const response = await axios.put(`https://unicap-events-backend.vercel.app/sub-event/${subEventId}`, formattedFormData, {
+            const response = await axios.put(`https://unicap-events-back-end.vercel.app/sub-event/${subEventId}`, formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

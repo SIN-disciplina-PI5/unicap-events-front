@@ -33,7 +33,7 @@ export default function Events() {
     const fetchEventos = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('https://unicap-events-backend.vercel.app/ingressos', {
+            const response = await axios.get('https://unicap-events-back-end.vercel.app/ingressos', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
