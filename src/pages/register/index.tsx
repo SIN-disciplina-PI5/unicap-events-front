@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
-import { LoginContainer, ImageContainer, ButtonContainer,ContainerRegister } from '@/styles/pages/login/style';
+import { LoginContainer, ImageContainer, ButtonContainer, ContainerRegister } from '@/styles/pages/login/style';
 
 const Register: React.FC = () => {
     const router = useRouter();
@@ -12,28 +12,38 @@ const Register: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [ra, setRA] = useState('');
+    const [phone, setPhone] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+    
         if (password !== confirmPassword) {
-            setError('As senhas não coincidem.');
+            setError('As senhas não coincidem.'); // Define a mensagem de erro
             return;
         }
-
+    
         setLoading(true);
-
+    
         try {
             const response = await axios.post('https://unicap-events-backend.vercel.app/auth/register', {
                 name,
                 email,
                 password,
+                confirm_password: confirmPassword,
+                ra,
+                phone,
             });
-
-            // Supondo que o registro seja bem-sucedido, redirecionar para a página inicial
-            router.push('/');
+    
+            // Verifica se a resposta foi bem-sucedida
+            if (response.status === 200) {
+                // Se o registro for bem-sucedido, você pode querer fazer algo, como redirecionar para a página de login
+                router.push('/login');
+            } else {
+                setError('Erro ao fazer cadastro. Verifique os dados fornecidos.');
+            }
         } catch (error) {
             setError('Erro ao fazer cadastro. Verifique os dados fornecidos.');
             console.error('Ocorreu um erro:', error);
@@ -70,7 +80,13 @@ const Register: React.FC = () => {
                             <FormLabel>Confirmar Senha</FormLabel>
                             <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
-                            {error && <p>{error}</p>}
+                            <FormLabel>RA</FormLabel>
+                            <Input type="text" value={ra} onChange={(e) => setRA(e.target.value)} />
+
+                            <FormLabel>Telefone</FormLabel>
+                            <Input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+
+                            {error && <p>{error}</p>} {/* Exibe a mensagem de erro se houver */}
 
                             <ButtonContainer>
                                 <Button
@@ -88,9 +104,9 @@ const Register: React.FC = () => {
                     </form>
                     <Link href="/login">
                         <p style={{ marginTop: '10px', display: 'block', textAlign: 'center', color: '#6A0014' }}>
-                        Já possui conta? Faça Login
+                            Já possui conta? Faça Login
                         </p>
-                    </Link>
+                    </Link>
                 </LoginContainer>
             </ContainerRegister>
         </>
