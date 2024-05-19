@@ -120,10 +120,12 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                                 <p><strong>Tipo:</strong> <Select name="type" placeholder="Selecione o tipo" value={user.type} onChange={handleSelectChange} marginTop="20px">
                                     <option value="Estudante">Estudante</option>
                                     <option value="Professor">Professor</option>
+                                    <option value="Participante">Participante </option>
                                 </Select></p>
                                 <p><strong>Permissão:</strong> <Select name="permission" placeholder="Permissão" value={user.permission} onChange={handleSelectChange} marginTop="20px">
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Organizador">Organizador</option>
+                                    <option value="SuperAdmin">Super Administrador</option>
+                                    <option value="Admin">Administrador</option>
+                                    <option value="Participante">Participante</option>
                                 </Select></p>
                             </div>
                         ) : (

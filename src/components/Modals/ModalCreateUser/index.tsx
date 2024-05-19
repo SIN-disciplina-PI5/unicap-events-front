@@ -73,10 +73,12 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                     <Select name="type" placeholder="Selecione o tipo" value={formData.type} onChange={handleInputChange} marginTop="20px">
                         <option value="Estudante">Estudante</option>
                         <option value="Professor">Professor</option>
+                        <option value="Participante">Participante </option>
                     </Select>
                     <Select name="permission" placeholder="Permissão" value={formData.permission} onChange={handleInputChange} marginTop="20px">
-                        <option value="Administrador">Administrador</option>
-                        <option value="Organizador">Organizador</option>
+                        <option value="Super Admin">Super Administrador</option>
+                        <option value="Admin">Administrador</option>
+                        <option value="Participante">Participante</option>
                     </Select>
                 </ModalBody>
                 <ModalFooter>

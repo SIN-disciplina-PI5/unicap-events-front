@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { TitlePageHome, MainHome } from "@/styles/pages/events/style";
+import { TitlePageHome, MainHome, ProjectDescription, DescriptionContainer } from "@/styles/pages/events/style";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,7 @@ export default function Home() {
     if (!token) {
       router.push('/login');
     }
-  }, []);
+  }, [router]);
 
   return (
     <>
@@ -29,8 +29,15 @@ export default function Home() {
         <TitlePageHome className={`${styles.h1}`}>
           Bem vindo ao unicap events!
         </TitlePageHome>
+        <DescriptionContainer>
+          <ProjectDescription>
+            O Unicap Events é uma plataforma desenvolvida por alunos do 5º período do curso de Sistemas para Internet da Universidade Católica de Pernambuco (UNICAP). Este projeto foi realizado como parte do Trabalho de Conclusão de Curso (TCC) e tem como objetivo facilitar a organização e a participação em eventos universitários.
+          </ProjectDescription>
+          <ProjectDescription>
+            Nossa missão é proporcionar uma ferramenta intuitiva e eficaz para gerenciar eventos, conectar alunos e promover atividades acadêmicas e sociais dentro da universidade. Esperamos que esta plataforma contribua significativamente para a comunidade acadêmica e inspire futuras gerações de desenvolvedores.
+          </ProjectDescription>
+        </DescriptionContainer>
       </MainHome>
     </>
   );
 }
-

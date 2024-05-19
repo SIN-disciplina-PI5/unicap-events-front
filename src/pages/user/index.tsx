@@ -21,53 +21,63 @@ interface Usuario {
 export default function User() {
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
     const [loading, setLoading] = useState(false);
-    const [selectedUserId, setSelectedUserId] = useState<number | null>(null); // Estado para armazenar o ID do usuário selecionado
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar se o modal está aberto
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false); // Estado para controlar se o modal de criar usuário está aberto
+    const [selectedUserId, setSelectedUserId] = useState<number | null>(null); 
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false); 
     const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        if (!token) {
+        const expiration = localStorage.getItem('expiration');
+
+        // Verifica se o token existe e não está expirado
+        if (!token || !expiration || new Date(expiration) <= new Date()) {
+            // Redireciona para a página de login se o token não existir ou estiver expirado
             router.push('/login');
         } else {
-            fetchUsuarios();
+            fetchUsuarios(token);
         }
     }, []);
 
-    const fetchUsuarios = async () => {
+    const fetchUsuarios = async (token: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://unicap-events-backend.vercel.app/user/`);
+            const response = await axios.get(`https://unicap-events-backend.vercel.app/user/`, {
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             if (Array.isArray(response.data.data)) {
                 setUsuarios(response.data.data);
             }
         } catch (error) {
             console.error('Ocorreu um erro:', error);
+            // Redireciona para a página de login em caso de erro na solicitação
+            router.push('/login');
         } finally {
             setLoading(false);
         }
     };
 
     const handleOpenModal = () => {
-        setIsModalOpen(true); // Abre o modal
+        setIsModalOpen(true); 
     };
 
     const handleCloseModal = () => {
-        setIsModalOpen(false); // Fecha o modal
+        setIsModalOpen(false); 
     };
 
     const handleUserClick = (userId: number) => {
-        setSelectedUserId(userId); // Armazena o ID do usuário clicado
-        handleOpenModal(); // Abre o modal
+        setSelectedUserId(userId); 
+        handleOpenModal(); 
     };
 
     const handleOpenCreateModal = () => {
-        setIsCreateModalOpen(true); // Abre o modal de criar usuário
+        setIsCreateModalOpen(true); 
     };
 
     const handleCloseCreateModal = () => {
-        setIsCreateModalOpen(false); // Fecha o modal de criar usuário
+        setIsCreateModalOpen(false); 
     };
 
     return (
@@ -101,7 +111,7 @@ export default function User() {
                                     color='red.500' />
                             </Flex>
                         ) : (
-                            <Table variant='striped' colorScheme='gray'>
+                            <Table variant='simple' colorScheme='red'>
                                 <TableCaption>Tabela de Usuários</TableCaption>
                                 <Thead>
                                     <Tr>
@@ -115,7 +125,9 @@ export default function User() {
                                 </Thead>
                                 <Tbody>
                                     {usuarios.map(usuario => (
-                                        <Tr key={usuario.id} onClick={() => handleUserClick(usuario.id)}>
+                                        <Tr key={usuario.id} onClick={() => handleUserClick(usuario.id)}
+                                        _hover={{ bg: 'red.100', boxShadow: 'md' }}
+                                        >
                                             <Td>{usuario.name}</Td>
                                             <Td>{usuario.email}</Td>
                                             <Td>{usuario.phone}</Td>
