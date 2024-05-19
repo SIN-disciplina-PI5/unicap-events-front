@@ -22,22 +22,33 @@ export default function Events() {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        if (!token) {
+        const expiration = localStorage.getItem('expiration');
+
+        // Verifica se o token existe e não está expirado
+        if (!token || !expiration || new Date(expiration) <= new Date()) {
+            // Redireciona para a página de login se o token não existir ou estiver expirado
             router.push('/login');
         } else {
-            fetchEventos();
+            // Busca eventos se o token for válido
+            fetchEventos(token);
         }
     }, []);
 
-    const fetchEventos = async () => {
+    const fetchEventos = async (token: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://unicap-events-backend.vercel.app/event/`);
+            const response = await axios.get('https://unicap-events-backend.vercel.app/event/', {
+                headers: {
+                    Authorization: `Bearer ${token}` // Inclui o token no cabeçalho da solicitação
+                }
+            });
             if (Array.isArray(response.data)) {
                 setEventos(response.data);
             }
         } catch (error) {
             console.error('Ocorreu um erro:', error);
+            // Redireciona para a página de login em caso de erro na solicitação
+            router.push('/login');
         } finally {
             setLoading(false);
         }
@@ -56,8 +67,12 @@ export default function Events() {
     };
 
     const handleUpdateEvents = () => {
-        fetchEventos();
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            fetchEventos(token);
+        }
     };
+
     return (
         <>
             <Head>
@@ -86,7 +101,8 @@ export default function Events() {
                                     emptyColor='gray.200'
                                     width={150}
                                     height={150}
-                                    color='red.500' />
+                                    color='red.500'
+                                />
                             </Flex>
                         ) : (
                             <Table variant='striped' colorScheme='gray'>
