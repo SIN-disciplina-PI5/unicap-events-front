@@ -105,7 +105,7 @@ export default function Events() {
                                 />
                             </Flex>
                         ) : (
-                            <Table variant='striped' colorScheme='gray'>
+                            <Table variant='simple' colorScheme='red'>
                                 <TableCaption>Tabela de Eventos</TableCaption>
                                 <Thead>
                                     <Tr>
@@ -116,7 +116,12 @@ export default function Events() {
                                 </Thead>
                                 <Tbody>
                                     {eventos.map(evento => (
-                                        <Tr key={evento.id} onClick={() => handleEventoClick(evento.id)} style={{ cursor: 'pointer' }}>
+                                            <Tr
+                                            key={evento.id}
+                                            onClick={() => handleEventoClick(evento.id)}
+                                            style={{ cursor: 'pointer' }}
+                                            _hover={{ bg: 'red.100', boxShadow: 'md' }}
+                                        >
                                             <Td>{evento.name}</Td>
                                             <Td>{format(new Date(evento.start_date), 'dd/MM/yyyy')}</Td>
                                             <Td>{evento.description}</Td>
