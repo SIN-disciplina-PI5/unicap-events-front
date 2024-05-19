@@ -54,17 +54,44 @@ export const Main = styled.div`
   background-color: white;
 `;
 
-export const MainHome = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 85vh;
-  margin-top: 10px;
-  border-radius: 10px;
-  background-color: white;
-`
+// export const MainHome = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 85vh;
+//   margin-top: 10px;
+//   border-radius: 10px;
+//   background-color: white;
+// `
+
+// export const TitlePageHome = styled.h1`
+//   font-size: 30px;
+// `;
 
 export const TitlePageHome = styled.h1`
-  font-size: 30px;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #6A0014;
+`;
+
+export const MainHome = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+`;
+
+export const DescriptionContainer = styled.div`
+  max-width: 800px;
+  text-align: center;
+  margin-top: 2rem;
+`;
+
+export const ProjectDescription = styled.p`
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 1rem;
 `;
