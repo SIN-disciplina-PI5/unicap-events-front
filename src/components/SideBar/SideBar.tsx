@@ -20,11 +20,25 @@ export function SideBar() {
     const btnRef: any = React.useRef()
     const navigation = useRouter();
 
-    const iconsNav = [
+    const superAdmin = [
         { label: "Início", path: "/" },
         { label: "Permissões", path: "/permissions" },
-        { label: "Usuários", path: "/user" },
+        { label: "Participantes", path: "/user" },
         { label: "Eventos", path: "/events" },
+        { label: "Credenciamento", path: "/creditation" },
+    ];
+
+    const admin = [
+        { label: "Início", path: "/" },
+        { label: "Participantes", path: "/user" },
+        { label: "Eventos", path: "/eventsAdmin" },
+        { label: "Credenciamento", path: "/creditation" },
+    ];
+
+    const participante = [
+        { label: "Início", path: "/" },
+        { label: "Eventos", path: "/eventsUser" }, 
+        { label: "Minhas Inscrições", path: "/subscribe" },
     ];
 
     const handleLogout = () => {
@@ -65,7 +79,7 @@ export function SideBar() {
                     </DrawerHeader>
 
                     <DrawerBody>
-                        {iconsNav.map((item, index) => (
+                        {superAdmin.map((item, index) => (
                             <Text
                                 key={index}
                                 color="#404040"
