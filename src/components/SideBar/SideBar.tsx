@@ -99,6 +99,7 @@ export function SideBar() {
                             bg="#6A0014"
                             color="white"
                             mt={16}
+                            _hover={{ bg: 'red.500' }}
                             onClick={handleLogout}
                         >
                             Sair

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { TitlePageHome, MainHome, ProjectDescription, DescriptionContainer } from "@/styles/pages/events/style";
+import { Button } from "@chakra-ui/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +17,10 @@ export default function Home() {
       router.push('/login');
     }
   }, [router]);
+
+  const handleNavigateToEasterEgg = () => {
+    router.push('/easter-egg');
+  };
 
   return (
     <>
@@ -35,6 +40,16 @@ export default function Home() {
           </ProjectDescription>
           <ProjectDescription>
             Nossa missão é proporcionar uma ferramenta intuitiva e eficaz para gerenciar eventos, conectar alunos e promover atividades acadêmicas e sociais dentro da universidade. Esperamos que esta plataforma contribua significativamente para a comunidade acadêmica e inspire futuras gerações de desenvolvedores.
+          </ProjectDescription>
+          <ProjectDescription>
+            Para saber mais sobre quem desenvolveu este projeto
+            <Button
+              bg="#6A0014"
+              color="white"
+              _hover={{ bg: 'red.500' }}
+              onClick={handleNavigateToEasterEgg}
+              marginLeft="10px" 
+          >Clique aqui!</Button>
           </ProjectDescription>
         </DescriptionContainer>
       </MainHome>

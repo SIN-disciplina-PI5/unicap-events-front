@@ -19,6 +19,12 @@ export const Title = styled.h1`
     font-weight: 500;
 `;
 
+export const TitleCreatores = styled.h1`
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+`;
+
 export const TitlePageId = styled.div`
     display: flex;
     align-items: left;
