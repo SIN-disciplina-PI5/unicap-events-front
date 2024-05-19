@@ -27,8 +27,18 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: value,
+            [name]: name === 'quantity' ? parseInt(value) : value, // Convertendo a quantidade para um número
         }));
+    };
+
+    const formatDateTime = (dateTimeString: string) => {
+        const date = new Date(dateTimeString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:00`;
     };
 
     const handleSubmit = async () => {
@@ -43,9 +53,9 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
             // Formatar as datas para o formato esperado pela API (YYYY-MM-DD HH:MM:SS)
             const formattedFormData = {
                 ...formData,
-                start_date: formData.start_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
-                end_date: formData.end_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
-                event: eventId, // Associa o sub-evento ao evento principal
+                start_date: formatDateTime(formData.start_date), // Formata a data de início
+                end_date: formatDateTime(formData.end_date), // Formata a data de término
+                event_id: eventId, // Corrigindo o nome do campo para event_id
                 address: {
                     block: formData.block,
                     room: formData.room,
@@ -53,7 +63,7 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
                 tickets: Array.from({ length: formData.quantity }, () => ({ status: 'available' })),
             };
 
-            const response = await axios.post(`https://unicap-events-back-end.vercel.app/sub-event/`, formattedFormData, {
+            const response = await axios.post('https://unicap-events-back-end.vercel.app/sub-event/', formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -95,9 +105,8 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
                     <Input name="room" placeholder="Sala" value={formData.room} onChange={handleInputChange} marginTop="20px" />
                     <FormControl marginTop="20px">
                         <FormLabel>Quantidade de Ingressos</FormLabel>
-                    <Input name="quantity" type="number" placeholder="Quantidade de Ingressos" value={formData.quantity} onChange={handleInputChange}  />
+                        <Input name="quantity" type="number" placeholder="Quantidade de Ingressos" value={formData.quantity} onChange={handleInputChange}  />
                     </FormControl>
-
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="red" mr={3} onClick={onClose}>
@@ -112,4 +121,4 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
     );
 };
 
-export default ModalCreateSubEvents
+export default ModalCreateSubEvents;
