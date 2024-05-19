@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Container, TitlePageId, TitleId, Main } from '../../styles/pages/events/style';
-import { Button, Spinner, Table, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
+import { Button, Spinner, Flex } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import EventoDetails from '@/components/Modals/ModalEvents';
 
@@ -17,75 +17,43 @@ interface Evento {
     }
 }
 
-// interface SubEvento {
-//     data: {
-//         id: number;
-//         name: string;
-//         start_date: string;
-//         end_date: string;
-//         description: string;
-//     }
-// }
-
 const EventoDetailsPage: React.FC = () => {
     const [evento, setEvento] = useState<Evento | null>(null);
-    // const [subEventos, setSubEventos] = useState<SubEvento[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Estado para controlar a abertura do modal
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const router = useRouter();
     const { id } = router.query;
 
-    // console.log(subEventos, "oi")
-
     useEffect(() => {
-        const fetchEvento = async () => {
-            try {
-                const token = localStorage.getItem('accessToken');
-                if (!token) {
-                    return;
-                }
+        const token = localStorage.getItem('accessToken');
+        const expiration = localStorage.getItem('expiration');
 
-                setLoading(true);
-                const response = await axios.get(`https://unicap-events-backend.vercel.app/event/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setEvento(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Ocorreu um erro ao buscar detalhes do evento:', error);
-                setLoading(false);
-            }
-        };
-
-        // const fetchSubEventos = async () => {
-        //     try {
-        //         const token = localStorage.getItem('accessToken');
-        //         if (!token) {
-        //             return;
-        //         }
-
-        //         setLoading(true);
-        //         const response = await axios.get(`https://unicap-events-backend.vercel.app//sub-event/`, {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`,
-        //             },
-        //         });
-        //         setSubEventos(response.data);
-        //         setLoading(false);
-        //     } catch (error) {
-        //         console.error('Ocorreu um erro ao buscar os sub-eventos:', error);
-        //         setLoading(false);
-        //     }
-        // };
-
-
-        if (id) {
-            fetchEvento();
-            // fetchSubEventos();
+        // Verifica se o token existe e não está expirado
+        if (!token || !expiration || new Date(expiration) <= new Date()) {
+            // Redireciona para a página de login se o token não existir ou estiver expirado
+            router.push('/login');
+        } else {
+            fetchEvento(token);
         }
     }, [id]);
+
+    const fetchEvento = async (token: string) => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`https://unicap-events-backend.vercel.app/event/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setEvento(response.data);
+        } catch (error) {
+            console.error('Ocorreu um erro ao buscar detalhes do evento:', error);
+            // Redireciona para a página de login em caso de erro na solicitação
+            router.push('/login');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -120,7 +88,6 @@ const EventoDetailsPage: React.FC = () => {
             <Main>
                 <Container>
                     <div>
-
                         <TitlePageId>
                             <TitleId>
                                 {evento.data.name}
@@ -155,7 +122,6 @@ const EventoDetailsPage: React.FC = () => {
                     </div> */}
                 </Container>
             </Main>
-            {/* Renderize o modal apenas quando o estado isModalOpen for true */}
             {isModalOpen && <EventoDetails eventId={Number(id)} onClose={handleCloseModal} />}
         </>
     );
