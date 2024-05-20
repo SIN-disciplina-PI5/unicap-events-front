@@ -38,7 +38,7 @@ export default function User() {
                 password: password
             });
 
-            const token = response.data.user.stsTokenManager.accessToken;
+            const token = response.data.data.token;
             const expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // Expira em um dia
             // Armazenar o token e a data de expiração no local storage
             localStorage.setItem('accessToken', token);
