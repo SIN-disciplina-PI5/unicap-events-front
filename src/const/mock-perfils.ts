@@ -35,7 +35,7 @@ export interface ProfileData {
     const mockData3: ProfileData = {
     imageUrl: 'https://media.licdn.com/dms/image/D5603AQEYA0BHqeGQ7w/profile-displayphoto-shrink_200_200/0/1706111398969?e=1721865600&v=beta&t=KFBHijJ-TOgDwpYAK_Uv26dVcR-bTO5kxDdAVHPQpmk',
     name: 'Gabriel José',
-    role: 'Função',
+    role: 'Engenheiro de Dados',
     githubLink: 'https://github.com/Gabrieljoseg',
     linkedinLink: 'https://www.linkedin.com/in/gabrie-jose-gomes/'
     };
@@ -59,7 +59,7 @@ export interface ProfileData {
     const mockData6: ProfileData = {
     imageUrl: 'https://media.licdn.com/dms/image/D4D03AQHqVHy5bpsI-Q/profile-displayphoto-shrink_200_200/0/1690293832452?e=1721865600&v=beta&t=Tyrxp_UiQd3XNF7ACE_lDhHyJ_80-HLICtlNu6tPpCE',
     name: 'Ewellyn Lira',
-    role: 'Função',
+    role: 'Desenvolvedora Backend',
     githubLink: '',
     linkedinLink: 'https://www.linkedin.com/in/rafael-costa'
     };
