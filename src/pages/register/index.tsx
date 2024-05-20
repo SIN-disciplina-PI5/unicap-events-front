@@ -19,14 +19,14 @@ const Register: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
+
         if (password !== confirmPassword) {
-            setError('As senhas não coincidem.'); // Define a mensagem de erro
+            setError('As senhas não coincidem.');
             return;
         }
-    
+
         setLoading(true);
-    
+
         try {
             const response = await axios.post('https://unicap-events-back-end.vercel.app/auth/register', {
                 name,
@@ -36,10 +36,9 @@ const Register: React.FC = () => {
                 ra,
                 phone,
             });
-    
-            // Verifica se a resposta foi bem-sucedida
+
             if (response.status === 200) {
-                // Se o registro for bem-sucedido, você pode querer fazer algo, como redirecionar para a página de login
+                alert(response.data.message || 'Usuário registrado com sucesso');
                 router.push('/login');
             } else {
                 setError('Erro ao fazer cadastro. Verifique os dados fornecidos.');

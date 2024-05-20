@@ -47,7 +47,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
             }
 
             setLoading(true);
-            await axios.put(`https://unicap-events-back-end.vercel.app//user/${user.id}`, user, {
+            await axios.put(`https://unicap-events-back-end.vercel.app/user/${user.id}`, user, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -69,7 +69,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
             }
 
             setLoading(true);
-            await axios.delete(`https://unicap-events-back-end.vercel.app//user/${user.id}`, {
+            await axios.delete(`https://unicap-events-back-end.vercel.app/user/${user.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

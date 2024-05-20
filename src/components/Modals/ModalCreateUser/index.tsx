@@ -12,6 +12,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
         name: '',
         email: '',
         password: '',
+        confirm_password: "",
         ra: '',
         phone: '',
         type: '',
@@ -38,7 +39,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                 return;
             }
 
-            const response = await axios.post(`https://unicap-events-back-end.vercel.app/user/`, formData, {
+            const response = await axios.post('https://unicap-events-back-end.vercel.app/user/', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -68,6 +69,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                     <Input name="name" placeholder="Nome" value={formData.name} onChange={handleInputChange} marginTop="20px" />
                     <Input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} marginTop="20px" />
                     <Input name="password" type="password" placeholder="Senha" value={formData.password} onChange={handleInputChange} marginTop="20px" />
+                    <Input name="confirm_password" type="password" placeholder="Confirmar senha" value={formData.confirm_password} onChange={handleInputChange} marginTop="20px" />
                     <Input name="ra" placeholder="RA" value={formData.ra} onChange={handleInputChange} marginTop="20px" />
                     <Input name="phone" placeholder="Telefone" value={formData.phone} onChange={handleInputChange} marginTop="20px" />
                     <Select name="type" placeholder="Selecione o tipo" value={formData.type} onChange={handleInputChange} marginTop="20px">

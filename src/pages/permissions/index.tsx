@@ -42,18 +42,8 @@ const EventoDetailsPage: React.FC = () => {
                             >
                                 + Adicionar pessoas
                             </Button>
-                            <Button
-                                bg="#6A0014"
-                                color="white"
-                                _hover={{ bg: 'red.500' }}
-                                onClick={() => setNotifyPersonModalOpen(true)}
-                            >
-                                Notificar pessoas
-                            </Button>
                         </div>
                     </div>
-                    {/* <div>
-                    </div> */}
                 </Container>
             </Main>
 
