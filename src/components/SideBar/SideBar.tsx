@@ -22,7 +22,6 @@ export function SideBar() {
 
     const superAdmin = [
         { label: "Início", path: "/" },
-        { label: "Permissões", path: "/permissions" },
         { label: "Participantes", path: "/user" },
         { label: "Eventos", path: "/events" },
         { label: "Credenciamento", path: "/creditation" },
