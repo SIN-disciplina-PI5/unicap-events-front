@@ -12,7 +12,7 @@ interface ILayout {
 const Layout: React.FC<ILayout> = ({ children, showLayout }) => {
     const { asPath } = useRouter();
     const refContainer = useRef<null | HTMLDivElement>(null);
-    const userPermission = typeof window !== 'undefined' ? localStorage.getItem('permission') : null; /
+    const userPermission = typeof window !== 'undefined' ? localStorage.getItem('permission') : null; 
 
     useEffect(() => {
         refContainer?.current?.scroll({
