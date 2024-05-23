@@ -55,11 +55,11 @@ export function SideBar({ permissions }: SideBarProps) {
 
     // Decide qual conjunto de links exibir com base nas permissões
     let links: { label: string; path: string; }[] = [];
-    if (permissions === "SuperAdmin") {
+    if (permissions == "SuperAdmin") {
         links = superAdmin;
-    } else if (permissions === "Admin") {
+    } else if (permissions == "Admin") {
         links = admin;
-    } else if (permissions === "Participante") {
+    } else if (permissions == "Participante") {
         links = participante;
     }
 
