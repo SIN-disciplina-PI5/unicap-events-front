@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useRouter } from 'next/router';
 import {
     Drawer,
@@ -11,16 +11,20 @@ import {
     Button,
     useDisclosure,
     Icon
-} from '@chakra-ui/react'
-import { HamburgerIcon } from '@chakra-ui/icons';
-import { Header, IconExit, Text } from "../SideBar/styles"
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons'; 
+import { Header, IconExit, Text } from "../SideBar/styles";
 
-export function SideBar() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef: any = React.useRef()
+interface SideBarProps {
+    permissions: string;
+}
+
+export function SideBar({ permissions }: SideBarProps) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const btnRef = React.useRef<HTMLButtonElement>(null);
     const navigation = useRouter();
 
-    const superAdmin = [
+    const superAdmin =    [
         { label: "Início", path: "/" },
         { label: "Participantes", path: "/user" },
         { label: "Eventos", path: "/events" },
@@ -29,14 +33,12 @@ export function SideBar() {
 
     const admin = [
         { label: "Início", path: "/" },
-        { label: "Participantes", path: "/user" },
-        { label: "Eventos", path: "/eventsAdmin" },
         { label: "Credenciamento", path: "/creditation" },
     ];
 
     const participante = [
         { label: "Início", path: "/" },
-        { label: "Eventos", path: "/eventsUser" }, 
+        { label: "Eventos", path: "/eventsUser" },
         { label: "Minhas Inscrições", path: "/subscribe" },
     ];
 
@@ -44,12 +46,22 @@ export function SideBar() {
         try {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('expiration');
-            // Redirecionar para a tela de login
+            localStorage.removeItem('permission');
             navigation.push('/login');
         } catch (error) {
             console.error("logout error", error);
         }
     };
+
+    // Decide qual conjunto de links exibir com base nas permissões
+    let links: { label: string; path: string; }[] = [];
+    if (permissions === "SuperAdmin") {
+        links = superAdmin;
+    } else if (permissions === "Admin") {
+        links = admin;
+    } else if (permissions === "Participante") {
+        links = participante;
+    }
 
     return (
         <>
@@ -78,7 +90,7 @@ export function SideBar() {
                     </DrawerHeader>
 
                     <DrawerBody>
-                        {superAdmin.map((item, index) => (
+                        {links.map((item, index) => (
                             <Text
                                 key={index}
                                 color="#404040"
