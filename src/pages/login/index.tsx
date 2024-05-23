@@ -39,9 +39,12 @@ export default function User() {
             });
 
             const token = response.data.data.token;
+            const permission = response.data.data.permission;
+            console.log(permission)
             const expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // Expira em um dia
             // Armazenar o token e a data de expiração no local storage
             localStorage.setItem('accessToken', token);
+            localStorage.setItem('permission', permission);
             localStorage.setItem('expiration', expiration.toISOString()); // Convertendo para string
 
             // Redirecionar para outra página protegida após o login
