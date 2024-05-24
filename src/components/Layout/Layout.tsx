@@ -24,7 +24,7 @@ const Layout: React.FC<ILayout> = ({ children, showLayout }) => {
     const isRegisterPage = asPath === '/register'; 
     const isLoginPage = asPath === '/login';
 
-    const shouldShowSidebar = typeof window !== 'undefined' && showLayout && !isLoginPage && !isRegisterPage && userPermission !== 'Participante' && userPermission !== null; // Verifica se está no navegador antes de acessar o localStorage
+    const shouldShowSidebar = typeof window !== 'undefined' && showLayout && !isLoginPage && !isRegisterPage && userPermission !== '' && userPermission !== null; // Verifica se está no navegador antes de acessar o localStorage
 
     return (
         <div>
