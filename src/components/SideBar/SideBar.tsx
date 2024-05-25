@@ -36,7 +36,8 @@ export function SideBar({ permissions }: SideBarProps) {
     const admin = [
         { label: "Início", path: "/" },
         { label: "Credenciamento", path: "/creditation" },
-        { label: "Ingressos", path: "/tickets" },
+        { label: "Eventos Disponíveis", path: "/eventsUser" },
+        { label: "Minhas Inscrições", path: "/mysubscribe" },
     ];
 
     const participante = [
