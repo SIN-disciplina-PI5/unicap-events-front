@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Spinner, Flex, Input, Select } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Spinner, Flex, Input, Select, useToast } from '@chakra-ui/react';
 
 interface UserModalProps {
     isOpen: boolean;
@@ -11,6 +11,7 @@ interface UserModalProps {
 const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const toast = useToast(); // Usado para exibir o alerta
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -53,7 +54,14 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                 },
             });
             setLoading(false);
-
+            toast({
+                title: 'Usuário atualizado com sucesso!',
+                description: "As alterações do usuário foram salvas.",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+            });
             onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao salvar as alterações do usuário:', error);
@@ -75,7 +83,14 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                 },
             });
             setLoading(false);
-
+            toast({
+                title: 'Usuário excluído com sucesso!',
+                description: "O usuário foi removido do sistema.",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+            });
             onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao excluir o usuário:', error);

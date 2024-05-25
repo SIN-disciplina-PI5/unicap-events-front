@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { LoginContainer, ImageContainer, ButtonContainer, ContainerRegister } from '@/styles/pages/login/style';
 
 const Register: React.FC = () => {
     const router = useRouter();
+    const toast = useToast();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -37,14 +38,25 @@ const Register: React.FC = () => {
                 phone,
             });
 
-            if (response.status === 200) {
-                alert(response.data.message || 'Usuário registrado com sucesso');
+            if (response.status === 200 || response.status === 201) {
+                setError(null); // Limpa a mensagem de erro ao sucesso
+                toast({
+                    title: 'Sucesso!',
+                    description: response.data.message || 'Usuário registrado com sucesso',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
                 router.push('/login');
             } else {
                 setError('Erro ao fazer cadastro. Verifique os dados fornecidos.');
             }
         } catch (error) {
-            setError('Erro ao fazer cadastro. Verifique os dados fornecidos.');
+            if (axios.isAxiosError(error)) {
+                setError(error.response?.data.message || 'Erro ao fazer cadastro. Verifique os dados fornecidos.');
+            } else {
+                setError('Erro desconhecido ao fazer cadastro.');
+            }
             console.error('Ocorreu um erro:', error);
         } finally {
             setLoading(false);
@@ -68,24 +80,23 @@ const Register: React.FC = () => {
                     <form onSubmit={handleSubmit}>
                         <FormControl>
                             <FormLabel>Nome</FormLabel>
-                            <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                                <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
                             <FormLabel>Email</FormLabel>
-                            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 
                             <FormLabel>Senha</FormLabel>
-                            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
                             <FormLabel>Confirmar Senha</FormLabel>
-                            <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                                <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
                             <FormLabel>RA</FormLabel>
-                            <Input type="text" value={ra} onChange={(e) => setRA(e.target.value)} />
+                                <Input type="text" value={ra} onChange={(e) => setRA(e.target.value)} />
 
                             <FormLabel>Telefone</FormLabel>
-                            <Input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-
-                            {error && <p>{error}</p>} {/* Exibe a mensagem de erro se houver */}
+                                <Input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                            {error && <p style={{ color: 'red' }}>{error}</p>} 
 
                             <ButtonContainer>
                                 <Button

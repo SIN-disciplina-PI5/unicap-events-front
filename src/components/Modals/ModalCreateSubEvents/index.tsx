@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface ModalCreateSubEventsProps {
@@ -22,6 +22,7 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
 
     const [formData, setFormData] = useState(initialFormData);
     const [loading, setLoading] = useState(false); // Estado para controlar o carregamento do botão
+    const toast = useToast(); // Usado para exibir o alerta
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -71,6 +72,14 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
             console.log('Subevento criado com sucesso:', response.data);
             resetForm(); // Chama a função para redefinir os campos do formulário
             onUpdateSubEvents(); // Atualiza a lista de subeventos após a criação do subevento
+            toast({
+                title: 'Subevento criado com sucesso!',
+                description: "O subevento foi adicionado com sucesso.",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+            });
             onClose(); // Fecha o modal após a criação do subevento
         } catch (error) {
             console.error('Ocorreu um erro ao criar o subevento:', error);
@@ -105,7 +114,7 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
                     <Input name="room" placeholder="Sala" value={formData.room} onChange={handleInputChange} marginTop="20px" />
                     <FormControl marginTop="20px">
                         <FormLabel>Quantidade de Ingressos</FormLabel>
-                        <Input name="quantity" type="number" placeholder="Quantidade de Ingressos" value={formData.quantity} onChange={handleInputChange}  />
+                        <Input name="quantity" type="number" placeholder="Quantidade de Ingressos" value={formData.quantity} onChange={handleInputChange} />
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>

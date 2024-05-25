@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface ModalEditSubEventProps {
@@ -22,6 +22,7 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
 
     const [formData, setFormData] = useState(initialFormData);
     const [loading, setLoading] = useState(false); // Estado para controlar o carregamento do botão
+    const toast = useToast();
 
     useEffect(() => {
         const fetchSubEvent = async () => {
@@ -67,6 +68,16 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
         }));
     };
 
+    const formatDateTime = (dateTimeString: string) => {
+        const date = new Date(dateTimeString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:00`;
+    };
+
     const handleSubmit = async () => {
         try {
             setLoading(true); // Define o estado de loading como true
@@ -79,8 +90,8 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
             // Formatar as datas para o formato esperado pela API (YYYY-MM-DD HH:MM:SS)
             const formattedFormData = {
                 ...formData,
-                start_date: formData.start_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
-                end_date: formData.end_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
+                start_date: formatDateTime(formData.start_date), // Formata a data de início
+                end_date: formatDateTime(formData.end_date), // Formata a data de término
                 address: {
                     block: formData.block,
                     room: formData.room,
@@ -95,9 +106,22 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
             console.log('Subevento editado com sucesso:', response.data);
             onUpdateSubEvents(); // Atualiza a lista de subeventos após a edição do subevento
             onClose(); // Fecha o modal após a edição do subevento
+            toast({
+                title: "Subevento editado com sucesso!",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            });
         } catch (error) {
             console.error('Ocorreu um erro ao editar o subevento:', error);
             // Lógica para lidar com o erro de edição do subevento
+            toast({
+                title: "Erro ao editar subevento!",
+                description: "Ocorreu um erro ao editar o subevento. Por favor, tente novamente mais tarde.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
         } finally {
             setLoading(false); // Define o estado de loading como false após a edição do subevento (seja sucesso ou erro)
         }

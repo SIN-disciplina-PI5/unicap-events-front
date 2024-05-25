@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, FormControl, FormLabel, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface ModalCreateEventsProps {
@@ -18,6 +18,7 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, 
 
     const [formData, setFormData] = useState(initialFormData);
     const [loading, setLoading] = useState(false); // Estado para controlar o carregamento do botão
+    const toast = useToast(); // Usado para exibir o alerta
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -25,6 +26,16 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, 
             ...prevState,
             [name]: value,
         }));
+    };
+
+    const formatDateTime = (dateTimeString: string) => {
+        const date = new Date(dateTimeString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:00`;
     };
 
     const handleSubmit = async () => {
@@ -39,8 +50,8 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, 
             // Formatar as datas para o formato esperado pela API (YYYY-MM-DD HH:MM:SS)
             const formattedFormData = {
                 ...formData,
-                start_date: formData.start_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
-                end_date: formData.end_date.replace('T', ' '), // Remove 'T' e mantém o tempo no formato 'HH:MM:SS'
+                start_date: formatDateTime(formData.start_date), 
+                end_date: formatDateTime(formData.end_date),
             };
 
             const response = await axios.post(`https://unicap-events-back-end.vercel.app/event/`, formattedFormData, {
@@ -51,6 +62,14 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, 
             console.log('Evento criado com sucesso:', response.data);
             resetForm(); // Chama a função para redefinir os campos do formulário
             onUpdateEvents(); // Atualiza a lista de eventos após a criação do evento
+            toast({
+                title: 'Evento criado com sucesso!',
+                description: "O evento foi adicionado com sucesso.",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+            });
             onClose(); // Fecha o modal após a criação do evento
         } catch (error) {
             console.error('Ocorreu um erro ao criar o evento:', error);

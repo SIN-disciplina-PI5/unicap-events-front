@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, Select } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Spinner, Select, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface ModalCreateUserProps {
     isOpen: boolean;
     onClose: () => void;
+    fetchUsers: () => void; // Função para atualizar a lista de usuários após a criação
 }
 
-const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) => {
+const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetchUsers }) => {
     const initialFormData = {
         name: '',
         email: '',
@@ -21,6 +22,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
 
     const [formData, setFormData] = useState(initialFormData);
     const [loading, setLoading] = useState(false); // Estado para controlar o carregamento do botão
+    const toast = useToast(); // Usado para exibir o alerta
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -45,7 +47,16 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                 },
             });
             console.log('Usuário criado com sucesso:', response.data);
+            toast({
+                title: 'Usuário criado com sucesso!',
+                description: "O usuário foi criado e adicionado ao sistema.",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+            });
             resetForm(); // Chama a função para redefinir os campos do formulário
+            fetchUsers(); // Atualiza a lista de usuários após a criação do novo usuário
             onClose(); // Fecha o modal após a criação do usuário
         } catch (error) {
             console.error('Ocorreu um erro ao criar o usuário:', error);
@@ -75,7 +86,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                     <Select name="type" placeholder="Selecione o tipo" value={formData.type} onChange={handleInputChange} marginTop="20px">
                         <option value="Estudante">Estudante</option>
                         <option value="Professor">Professor</option>
-                        <option value="Participante">Participante </option>
+                        <option value="Participante">Participante</option>
                     </Select>
                     <Select name="permission" placeholder="Permissão" value={formData.permission} onChange={handleInputChange} marginTop="20px">
                         <option value="Super Admin">Super Administrador</option>

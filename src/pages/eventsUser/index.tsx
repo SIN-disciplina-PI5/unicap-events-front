@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import {  Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
+import { Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { Container, TitlePage, Title, Main } from '../../styles/pages/events/style';
 import { format } from 'date-fns';
 
@@ -13,10 +13,9 @@ interface Evento {
     description: number;
 }
 
-export default function Acreditation() {
+export default function Events() {
     const [eventos, setEventos] = useState<Evento[]>([]);
     const [loading, setLoading] = useState(false);
-    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -54,7 +53,7 @@ export default function Acreditation() {
     };
 
     const handleEventoClick = (eventId: number) => {
-        router.push(`/creditation/${eventId}`);
+        router.push(`/eventsUser/${eventId}`);
     };
 
     return (
@@ -69,7 +68,7 @@ export default function Acreditation() {
                 <Container>
                     <TitlePage>
                         <Title>
-                            Credenciamento
+                            Eventos Disponíveis 
                         </Title>
                     </TitlePage>
 
