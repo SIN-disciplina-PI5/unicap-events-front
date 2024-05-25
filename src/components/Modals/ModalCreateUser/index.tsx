@@ -5,10 +5,9 @@ import axios from 'axios';
 interface ModalCreateUserProps {
     isOpen: boolean;
     onClose: () => void;
-    fetchUsers: (token: string) => void; 
 }
 
-const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetchUsers }) => {
+const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) => {
     const initialFormData = {
         name: '',
         email: '',
@@ -55,7 +54,6 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetc
                 position: 'top-right',
             });
             resetForm();
-            fetchUsers(token); // Chama a função fetchUsers com o token
             onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao criar o usuário:', error);
