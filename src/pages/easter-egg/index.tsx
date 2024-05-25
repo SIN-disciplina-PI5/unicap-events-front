@@ -1,9 +1,16 @@
 import React from 'react';
 import Head from 'next/head';
-import { Container, TitlePage, TitleCreatores, Main } from '../../styles/pages/events/style';
+import { useRouter } from 'next/router';
+import { Container, TitlePage, TitleCreatores, Main, ButtonWrapper } from '../../styles/pages/events/style';
 import MockProfile from '@/components/MockProfile';
+import { Button } from '@chakra-ui/react';
 
 export default function EasterEgg() {
+    const router = useRouter();
+
+    const handleBack = () => {
+        router.push('/');
+    };
 
     return (
         <>
@@ -19,10 +26,15 @@ export default function EasterEgg() {
                         <TitleCreatores>
                             Criadores do projeto
                         </TitleCreatores>
-                        </TitlePage>
-                        <MockProfile />
+                        <ButtonWrapper>
+                            <Button bg="#6A0014" color="white" _hover={{ bg: 'red.500' }} onClick={handleBack}>
+                                <span>Voltar</span>
+                            </Button>
+                        </ButtonWrapper>
+                    </TitlePage>
+                    <MockProfile />
                 </Container>
             </Main>
-        </>
-    );
+        </>
+    );
 }
