@@ -5,7 +5,7 @@ import axios from 'axios';
 interface ModalCreateUserProps {
     isOpen: boolean;
     onClose: () => void;
-    fetchUsers: () => void; // Função para atualizar a lista de usuários após a criação
+    fetchUsers: (token: string) => void; 
 }
 
 const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetchUsers }) => {
@@ -21,8 +21,8 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetc
     };
 
     const [formData, setFormData] = useState(initialFormData);
-    const [loading, setLoading] = useState(false); // Estado para controlar o carregamento do botão
-    const toast = useToast(); // Usado para exibir o alerta
+    const [loading, setLoading] = useState(false);
+    const toast = useToast();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -34,10 +34,9 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetc
 
     const handleSubmit = async () => {
         try {
-            setLoading(true); // Define o estado de loading como true
+            setLoading(true);
             const token = localStorage.getItem('accessToken');
             if (!token) {
-                // Lógica para lidar com a falta de token
                 return;
             }
 
@@ -55,14 +54,14 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, fetc
                 isClosable: true,
                 position: 'top-right',
             });
-            resetForm(); // Chama a função para redefinir os campos do formulário
-            fetchUsers(); // Atualiza a lista de usuários após a criação do novo usuário
-            onClose(); // Fecha o modal após a criação do usuário
+            resetForm();
+            fetchUsers(token); // Chama a função fetchUsers com o token
+            onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao criar o usuário:', error);
-            // Lógica para lidar com o erro de criação do usuário
         } finally {
-            setLoading(false); // Define o estado de loading como false após o envio do usuário (seja sucesso ou erro)
+            setLoading(false);
+            onClose();
         }
     };
 

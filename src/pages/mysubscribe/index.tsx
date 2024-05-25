@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { Container, TitlePage, Title, Main } from '../../styles/pages/events/style';
+import { TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react';
+import { format } from 'date-fns';
+import axios from 'axios';
+
+interface Subevento {
+    id: number;
+    name: string;
+    description: string;
+    start_date: string;
+    end_date: string;
+    address: {
+        block: string;
+        room: string;
+    };
+    tickets: Array<{
+        status: string;
+    }>;
+}
 
 export default function Mysubscribe() {
+    const [subeventos, setSubeventos] = useState<Subevento[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const fetchSubeventos = async (token: string, eventId: number) => {
+        setLoading(true);
+        try {
+            const subeventosResponse = await axios.get(`https://unicap-events-back-end.vercel.app/sub-event?eventId=${eventId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const subeventosData = subeventosResponse.data.data;
+            setSubeventos(subeventosData || []); // Certifique-se de que subeventos é um array
+        } catch (error) {
+            console.error('Ocorreu um erro ao buscar subeventos:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -19,6 +57,40 @@ export default function Mysubscribe() {
                             Minhas inscrições
                         </Title>
                         </TitlePage>
+                        <div>
+                        <TableContainer>
+                            <Table variant='simple' colorScheme='red'>
+                                <TableCaption>Subeventos do Evento</TableCaption>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Nome</Th>
+                                        <Th>Data Inicial</Th>
+                                        <Th>Data Final</Th>
+                                        <Th>Descrição</Th>
+                                        <Th>Localização</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {subeventos.length > 0 ? subeventos.map(subevento => (
+                                        <Tr
+                                            key={subevento.id}
+                                            _hover={{ bg: 'red.100', boxShadow: 'md' }}
+                                        >
+                                            <Td>{subevento.name}</Td>
+                                            <Td>{format(new Date(subevento.start_date), 'dd/MM/yyyy')}</Td>
+                                            <Td>{format(new Date(subevento.end_date), 'dd/MM/yyyy')}</Td>
+                                            <Td>{subevento.description}</Td>
+                                            <Td>{`Bloco: ${subevento.address.block}, Sala: ${subevento.address.room}`}</Td>
+                                        </Tr>
+                                    )) : (
+                                        <Tr>
+                                            <Td colSpan={6}>Nenhum subevento encontrado.</Td>
+                                        </Tr>
+                                    )}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
+                        </div>
                 </Container>
             </Main>
         </>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { Container, TitlePageId, TitleId, Main } from '../../styles/pages/events/style';
+import { Container, TitlePageId, TitleId, Main, TitlePage, Title } from '../../styles/pages/events/style';
 import { Button, Spinner, Flex, Table, Thead, Tbody, Tr, Th, Td, TableContainer, TableCaption } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
@@ -96,8 +96,7 @@ const AcrecitaionDetailsPage: React.FC = () => {
     }, [id]);
 
     const handleOpenEditModal = (subEventId: number) => {
-        // Redirecionamento para a tela de tickets
-        router.push(`/tickets`);
+        router.push(`/tickets?subEventId=${subEventId}`);
     };
 
     if (loading || !evento) {
@@ -126,13 +125,16 @@ const AcrecitaionDetailsPage: React.FC = () => {
             <Main>
                 <Container>
                     <div>
+                    <TitlePage>
+                        <Title>
+                            Credenciamento Sub eventos
+                        </Title>
+                    </TitlePage>
                         <TitlePageId>
-                            <TitleId>
-                                {evento.name}
-                            </TitleId>
-                            {evento.start_date && <p>Data e Hora Inicial: {format(new Date(evento.start_date), 'dd/MM/yyyy')}</p>}
-                            {evento.end_date && <p>Data e Hora Final: {format(new Date(evento.end_date), 'dd/MM/yyyy')}</p>}
-                            <p>Descrição: {evento.description}</p>
+                            <p>
+                                {evento.name} <br />
+                                (clique em um sub evento para listagem de inscritos)
+                            </p>
                         </TitlePageId>
                     </div>
                     <div>

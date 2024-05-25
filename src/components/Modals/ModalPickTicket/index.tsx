@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Spinner } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Spinner, useToast } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import axios from 'axios';
 
@@ -21,6 +21,7 @@ interface ModalPickTicketProps {
 
 const ModalPickTicket: React.FC<ModalPickTicketProps> = ({ isOpen, onClose, subEvent }) => {
     const [loading, setLoading] = React.useState<boolean>(false);
+    const toast = useToast(); // Usado para exibir o alerta
 
     const handleSubscribe = async () => {
         console.log('handleSubscribe called'); // Log para depuração
@@ -44,6 +45,14 @@ const ModalPickTicket: React.FC<ModalPickTicketProps> = ({ isOpen, onClose, subE
 
             console.log('Inscrição realizada com sucesso:', response.data);
             onClose();
+            toast({
+                title: 'Inscrição realizada com sucesso!',
+                description: 'Você foi inscrito no subevento.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right',
+            });
         } catch (error) {
             console.error('Ocorreu um erro ao se inscrever no subevento:', error);
         } finally {

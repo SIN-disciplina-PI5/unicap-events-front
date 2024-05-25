@@ -29,7 +29,6 @@ export function SideBar({ permissions }: SideBarProps) {
         { label: "Participantes", path: "/user" },
         { label: "Eventos", path: "/events" },
         { label: "Credenciamento", path: "/creditation" },
-        { label: "Ingressos", path: "/tickets" },
         { label: "Eventos Disponíveis", path: "/eventsUser" },
         { label: "Minhas Inscrições", path: "/mysubscribe" },
     ];

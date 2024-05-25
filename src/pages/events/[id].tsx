@@ -17,6 +17,7 @@ interface Subevento {
     start_date: string;
     end_date: string;
     quantity: number;
+    tickets_available: number;
     address: {
         block: string;
         room: string;
@@ -180,6 +181,7 @@ const EventoDetailsPage: React.FC = () => {
                                         <Th>Data Final</Th>
                                         <Th>Descrição</Th>
                                         <Th>Localização</Th>
+                                        <Th>Ingressos</Th>
                                         <Th>Ingressos Disponíveis</Th>
                                     </Tr>
                                 </Thead>
@@ -195,7 +197,8 @@ const EventoDetailsPage: React.FC = () => {
                                             <Td>{format(new Date(subevento.end_date), 'dd/MM/yyyy')}</Td>
                                             <Td>{subevento.description}</Td>
                                             <Td>{`Bloco: ${subevento.address.room}, Sala: ${subevento.address.block}`}</Td>
-                                            <Td>{subevento.tickets.filter(ticket => ticket.status === 'available').length}</Td>
+                                            <Td>{subevento.quantity}</Td>
+                                            <Td>{subevento.tickets_available}</Td>
                                         </Tr>
                                     )) : (
                                         <Tr>

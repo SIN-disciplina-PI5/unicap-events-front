@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import {  Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
+import { Spinner, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr, Flex } from '@chakra-ui/react';
 import { Container, TitlePage, Title, Main } from '../../styles/pages/events/style';
 import { format } from 'date-fns';
 
@@ -10,25 +10,21 @@ interface Evento {
     id: number;
     name: string;
     start_date: string;
-    description: number;
+    description: string;
 }
 
 export default function Acreditation() {
     const [eventos, setEventos] = useState<Evento[]>([]);
     const [loading, setLoading] = useState(false);
-    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         const expiration = localStorage.getItem('expiration');
 
-        // Verifica se o token existe e não está expirado
         if (!token || !expiration || new Date(expiration) <= new Date()) {
-            // Redireciona para a página de login se o token não existir ou estiver expirado
             router.push('/login');
         } else {
-            // Busca eventos se o token for válido
             fetchEventos(token);
         }
     }, []);
@@ -38,7 +34,7 @@ export default function Acreditation() {
         try {
             const response = await axios.get('https://unicap-events-back-end.vercel.app/event/', {
                 headers: {
-                    Authorization: `Bearer ${token}` // Inclui o token no cabeçalho da solicitação
+                    Authorization: `Bearer ${token}`
                 }
             });
             if (Array.isArray(response.data)) {
@@ -46,7 +42,6 @@ export default function Acreditation() {
             }
         } catch (error) {
             console.error('Ocorreu um erro:', error);
-            // Redireciona para a página de login em caso de erro na solicitação
             router.push('/login');
         } finally {
             setLoading(false);
@@ -68,25 +63,23 @@ export default function Acreditation() {
             <Main>
                 <Container>
                     <TitlePage>
-                        <Title>
-                            Credenciamento
-                        </Title>
+                        <Title>Credenciamento de Eventos</Title>
                     </TitlePage>
 
                     <TableContainer>
                         {loading ? (
                             <Flex justify="center" align="center" height="600px">
                                 <Spinner
-                                    thickness='10px'
-                                    speed='0.65s'
-                                    emptyColor='gray.200'
+                                    thickness="10px"
+                                    speed="0.65s"
+                                    emptyColor="gray.200"
                                     width={150}
                                     height={150}
-                                    color='red.500'
+                                    color="red.500"
                                 />
                             </Flex>
                         ) : (
-                            <Table variant='simple' colorScheme='red'>
+                            <Table variant="simple" colorScheme="red">
                                 <TableCaption>Tabela de Eventos</TableCaption>
                                 <Thead>
                                     <Tr>
@@ -97,7 +90,7 @@ export default function Acreditation() {
                                 </Thead>
                                 <Tbody>
                                     {eventos.map(evento => (
-                                            <Tr
+                                        <Tr
                                             key={evento.id}
                                             onClick={() => handleEventoClick(evento.id)}
                                             style={{ cursor: 'pointer' }}

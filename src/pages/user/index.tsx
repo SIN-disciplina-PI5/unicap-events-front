@@ -144,6 +144,7 @@ export default function User() {
 
                 <UserModal isOpen={isModalOpen} userId={selectedUserId} onClose={handleCloseModal} />
                 <ModalCreateUser isOpen={isCreateModalOpen} onClose={handleCloseCreateModal} />
+                
             </main>
         </>
     );
