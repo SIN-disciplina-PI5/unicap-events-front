@@ -29,8 +29,6 @@ const ModalPickTicket: React.FC<ModalPickTicketProps> = ({ isOpen, onClose, subE
             setLoading(true);
             const token = localStorage.getItem('accessToken');
 
-            console.log('Token:', token); // Log para depuração
-            console.log('SubEventId:', subEvent.id); // Log para depuração
 
             if (!token) {
                 console.error('Token não encontrado.');
@@ -43,16 +41,29 @@ const ModalPickTicket: React.FC<ModalPickTicketProps> = ({ isOpen, onClose, subE
                 },
             });
 
-            console.log('Inscrição realizada com sucesso:', response.data);
-            onClose();
-            toast({
-                title: 'Inscrição realizada com sucesso!',
-                description: 'Você foi inscrito no subevento.',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                position: 'top-right',
-            });
+            console.log('Resposta do backend:', response.data);
+
+            if (response.data.error === "Usuário já inscrito no evento") {
+                toast({
+                    title: 'Usuário já está inscrito!',
+                    description: 'Você já está inscrito neste subevento.',
+                    status: 'warning',
+                    duration: 5000,
+                    isClosable: true,
+                    position: 'top-right',
+                });
+            } else {
+                toast({
+                    title: 'Inscrição realizada com sucesso!',
+                    description: 'Você foi inscrito no subevento.',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                    position: 'top-right',
+                });
+            }
+
+            onClose(); // Fechar o modal em qualquer caso de resposta
         } catch (error) {
             console.error('Ocorreu um erro ao se inscrever no subevento:', error);
         } finally {
