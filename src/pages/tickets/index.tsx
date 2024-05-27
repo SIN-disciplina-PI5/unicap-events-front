@@ -37,7 +37,7 @@ const TicketsPage: React.FC = () => {
     const handleAccreditation = async (codigoIngresso: string) => {
         try {
             const token = localStorage.getItem('accessToken');
-            await axios.post(`https://unicap-events-back-end.vercel.app/accreditation/${codigoIngresso}`, {}, {
+            await axios.put(`https://unicap-events-back-end.vercel.app/accreditation/${codigoIngresso}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
