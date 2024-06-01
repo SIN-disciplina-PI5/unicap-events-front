@@ -43,9 +43,9 @@ const EventoDetailsPage: React.FC = () => {
     const fetchEventoPrincipal = async (token: string, eventId: number) => {
         setLoading(true);
         try {
-            const eventoResponse = await axios.get(`https://unicap-events-back-end.vercel.app/event/${eventId}`, {
+            const eventoResponse = await axios.get(https://unicap-events-back-end.vercel.app/event/${eventId}, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: Bearer ${token},
                 },
             });
 
@@ -62,9 +62,9 @@ const EventoDetailsPage: React.FC = () => {
     const fetchSubeventos = async (token: string, eventId: number) => {
         setLoading(true);
         try {
-            const subeventosResponse = await axios.get(`https://unicap-events-back-end.vercel.app/sub-event?eventId=${eventId}`, {
+            const subeventosResponse = await axios.get(https://unicap-events-back-end.vercel.app/sub-event?eventId=${eventId}, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: Bearer ${token},
                 },
             });
 
@@ -112,7 +112,7 @@ const EventoDetailsPage: React.FC = () => {
     return (
         <>
             <Head>
-                <title>{evento.name} | Detalhes do Evento</title>
+                <title>{evento.name} | SubEventos disponíveis</title>
                 <meta name="description" content="Detalhes do Evento" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
@@ -154,7 +154,7 @@ const EventoDetailsPage: React.FC = () => {
                                             <Td>{format(new Date(subevento.start_date), 'dd/MM/yyyy')}</Td>
                                             <Td>{format(new Date(subevento.end_date), 'dd/MM/yyyy')}</Td>
                                             <Td>{subevento.description}</Td>
-                                            <Td>{`Bloco: ${subevento.address.block}, Sala: ${subevento.address.room}`}</Td>
+                                            <Td>{Bloco: ${subevento.address.block}, Sala: ${subevento.address.room}}</Td>
                                             <Td>{subevento.tickets_available}</Td>
                                         </Tr>
                                     )) : (
