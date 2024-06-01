@@ -117,7 +117,7 @@ const AcrecitaionDetailsPage: React.FC = () => {
     return (
         <>
             <Head>
-                <title>{evento.name} | Detalhes do Evento</title>
+                <title>{evento.name} | Credenciamento</title>
                 <meta name="description" content="Detalhes do Evento" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
