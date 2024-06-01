@@ -54,7 +54,7 @@ export const Main = styled.div`
       flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  min-height: 85vh;
+  min-height: 88vh;
   margin-top: 10px;
   border-radius: 10px;
   background-color: white;
@@ -65,7 +65,7 @@ export const Main = styled.div`
 //   flex-direction: column;
 //   justify-content: center;
 //   align-items: center;
-//   min-height: 85vh;
+//   min-height: 88vh;
 //   margin-top: 10px;
 //   border-radius: 10px;
 //   background-color: white;
@@ -101,3 +101,10 @@ export const ProjectDescription = styled.p`
   color: #333;
   margin-bottom: 1rem;
 `;
+
+export const WrapperImage = styled.div`
+    padding: 10px 20px;
+    img{
+        width: 10rem;
+    }
+`
