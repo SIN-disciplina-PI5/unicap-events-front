@@ -21,14 +21,14 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
     };
 
     const [formData, setFormData] = useState(initialFormData);
-    const [loading, setLoading] = useState(false); // Estado para controlar o carregamento do botão
-    const toast = useToast(); // Usado para exibir o alerta
+    const [loading, setLoading] = useState(false);
+    const toast = useToast(); 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: name === 'quantity' ? parseInt(value) : value, // Convertendo a quantidade para um número
+            [name]: name === 'quantity' ? parseInt(value) : value, 
         }));
     };
 
@@ -39,24 +39,22 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
         const day = String(date.getDate()).padStart(2, '0');
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${year}-${month}-${day} ${hours}:${minutes}:00`;
+        return ${year}-${month}-${day} ${hours}:${minutes}:00;
     };
 
     const handleSubmit = async () => {
         try {
-            setLoading(true); // Define o estado de loading como true
+            setLoading(true); 
             const token = localStorage.getItem('accessToken');
             if (!token) {
-                // Lógica para lidar com a falta de token
                 return;
             }
 
-            // Formatar as datas para o formato esperado pela API (YYYY-MM-DD HH:MM:SS)
             const formattedFormData = {
                 ...formData,
-                start_date: formatDateTime(formData.start_date), // Formata a data de início
-                end_date: formatDateTime(formData.end_date), // Formata a data de término
-                event_id: eventId, // Corrigindo o nome do campo para event_id
+                start_date: formatDateTime(formData.start_date), 
+                end_date: formatDateTime(formData.end_date), 
+                event_id: eventId,
                 address: {
                     block: formData.block,
                     room: formData.room,
@@ -66,12 +64,12 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
 
             const response = await axios.post('https://unicap-events-back-end.vercel.app/sub-event/', formattedFormData, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: Bearer ${token},
                 },
             });
             console.log('Subevento criado com sucesso:', response.data);
-            resetForm(); // Chama a função para redefinir os campos do formulário
-            onUpdateSubEvents(); // Atualiza a lista de subeventos após a criação do subevento
+            resetForm(); 
+            onUpdateSubEvents(); 
             toast({
                 title: 'Subevento criado com sucesso!',
                 description: "O subevento foi adicionado com sucesso.",
@@ -80,12 +78,11 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
                 isClosable: true,
                 position: 'top-right',
             });
-            onClose(); // Fecha o modal após a criação do subevento
+            onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao criar o subevento:', error);
-            // Lógica para lidar com o erro de criação do subevento
         } finally {
-            setLoading(false); // Define o estado de loading como false após o envio do subevento (seja sucesso ou erro)
+            setLoading(false); 
         }
     };
 
