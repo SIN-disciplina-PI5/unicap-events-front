@@ -6,9 +6,10 @@ interface UserModalProps {
     isOpen: boolean;
     userId: number | null; // ID do usuário selecionado
     onClose: () => void; // Função para fechar o modal
+    onUpdateUsers: () => void; // Função para atualizar a lista de usuários
 }
 
-const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
+const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose, onUpdateUsers }) => {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const toast = useToast(); // Usado para exibir o alerta
@@ -22,9 +23,9 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                 }
 
                 setLoading(true);
-                const response = await axios.get(`https://unicap-events-back-end.vercel.app/user/${userId}`, {
+                const response = await axios.get(https://unicap-events-back-end.vercel.app/user/${userId}, {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: Bearer ${token},
                     },
                 });
                 setUser(response.data);
@@ -48,9 +49,9 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
             }
 
             setLoading(true);
-            await axios.put(`https://unicap-events-back-end.vercel.app/user/${user.id}`, user, {
+            await axios.put(https://unicap-events-back-end.vercel.app/user/${user.id}, user, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: Bearer ${token},
                 },
             });
             setLoading(false);
@@ -62,6 +63,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                 isClosable: true,
                 position: 'top-right',
             });
+            onUpdateUsers(); // Chame a função para atualizar a lista de usuários
             onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao salvar as alterações do usuário:', error);
@@ -77,9 +79,9 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
             }
 
             setLoading(true);
-            await axios.delete(`https://unicap-events-back-end.vercel.app/user/${user.id}`, {
+            await axios.delete(https://unicap-events-back-end.vercel.app/user/${user.id}, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: Bearer ${token},
                 },
             });
             setLoading(false);
@@ -91,6 +93,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                 isClosable: true,
                 position: 'top-right',
             });
+            onUpdateUsers(); // Chame a função para atualizar a lista de usuários
             onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao excluir o usuário:', error);
@@ -152,10 +155,10 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, userId, onClose }) => {
                     <Button colorScheme='yellow' mr={3} onClick={onClose}>
                         Fechar
                     </Button>
-                    <Button colorScheme='red' mr={3} onClick={handleDelete}>
+                    <Button colorScheme='red' mr={3} onClick={handleDelete} isLoading={loading}>
                         Excluir
                     </Button>
-                    <Button colorScheme='green' mr={3} onClick={handleSave}>
+                    <Button colorScheme='green' mr={3} onClick={handleSave} isLoading={loading}>
                         Salvar
                     </Button>
                 </ModalFooter>
