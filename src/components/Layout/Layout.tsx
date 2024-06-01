@@ -38,7 +38,7 @@ const Layout: React.FC<ILayout> = ({ children, showLayout }) => {
                                 </WrapperSideBar>
 
                                 <WrapperSideBar>
-                                    <img src="/humanitas.jfif" alt="Descrição da imagem" />
+                                    <img src="/unicap-events.jpg" alt="Descrição da imagem" />
                                 </WrapperSideBar>
                             </Container>
                         </Box>
