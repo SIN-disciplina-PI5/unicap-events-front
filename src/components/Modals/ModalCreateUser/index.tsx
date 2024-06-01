@@ -5,9 +5,10 @@ import axios from 'axios';
 interface ModalCreateUserProps {
     isOpen: boolean;
     onClose: () => void;
+    onUpdateUsers: () => void; // Adicione esta linha
 }
 
-const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) => {
+const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose, onUpdateUsers }) => {
     const initialFormData = {
         name: '',
         email: '',
@@ -41,7 +42,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
 
             const response = await axios.post('https://unicap-events-back-end.vercel.app/user/', formData, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: Bearer ${token},
                 },
             });
             console.log('Usuário criado com sucesso:', response.data);
@@ -54,6 +55,7 @@ const ModalCreateUser: React.FC<ModalCreateUserProps> = ({ isOpen, onClose }) =>
                 position: 'top-right',
             });
             resetForm();
+            onUpdateUsers(); // Chame a função para atualizar a lista de usuários
             onClose();
         } catch (error) {
             console.error('Ocorreu um erro ao criar o usuário:', error);
