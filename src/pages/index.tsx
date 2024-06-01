@@ -30,11 +30,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainHome className={${styles.main} ${inter.className}}>
+      <MainHome className={`${styles.main} ${inter.className}`}>
       <WrapperImage>
           <img src="/ticket.jpg" alt="Descrição da imagem" />
       </WrapperImage>
-        <TitlePageHome className={${styles.h1}}>
+        <TitlePageHome className={`${styles.h1}`}>
           Bem vindo ao unicap events!
         </TitlePageHome>
         <DescriptionContainer>

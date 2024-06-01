@@ -42,9 +42,9 @@ export default function User() {
     const fetchUsuarios = async (token: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(https://unicap-events-back-end.vercel.app/user/, {
+            const response = await axios.get(`https://unicap-events-back-end.vercel.app/user/`, {
                 headers: { 
-                    Authorization: Bearer ${token},
+                    Authorization: `Bearer ${token}`,
                 },
             });
             if (Array.isArray(response.data.data)) {
@@ -96,7 +96,7 @@ export default function User() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={${styles.main}}>
+            <main className={`${styles.main}`}>
                 <Container>
                     <TitlePage>
                         <Title>

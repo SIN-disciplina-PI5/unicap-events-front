@@ -39,7 +39,7 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
         const day = String(date.getDate()).padStart(2, '0');
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
-        return ${year}-${month}-${day} ${hours}:${minutes}:00;
+        return `${year}-${month}-${day} ${hours}:${minutes}:00`;
     };
 
     const handleSubmit = async () => {
@@ -64,7 +64,7 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
 
             const response = await axios.post('https://unicap-events-back-end.vercel.app/sub-event/', formattedFormData, {
                 headers: {
-                    Authorization: Bearer ${token},
+                    Authorization: `Bearer ${token}`,
                 },
             });
             console.log('Subevento criado com sucesso:', response.data);
