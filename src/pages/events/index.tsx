@@ -39,7 +39,7 @@ export default function Events() {
         try {
             const response = await axios.get('https://unicap-events-back-end.vercel.app/event/', {
                 headers: {
-                    Authorization: Bearer ${token} // Inclui o token no cabeçalho da solicitação
+                    Authorization: `Bearer ${token}` // Inclui o token no cabeçalho da solicitação
                 }
             });
             if (Array.isArray(response.data)) {
@@ -55,7 +55,7 @@ export default function Events() {
     };
 
     const handleEventoClick = (eventId: number) => {
-        router.push(/events/${eventId});
+        router.push(`/events/${eventId}`);
     };
 
     const handleOpenModalCreate = () => {
