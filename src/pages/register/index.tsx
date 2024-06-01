@@ -66,7 +66,7 @@ const Register: React.FC = () => {
     return (
         <>
             <Head>
-                <title>Cadastro | Humanitas</title>
+                <title>Cadastro | Unicap Events</title>
                 <meta name="description" content="Cadastro de novos usuários" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
@@ -75,7 +75,7 @@ const Register: React.FC = () => {
             <ContainerRegister>
                 <LoginContainer>
                     <ImageContainer>
-                        <img src="/humanitas.jfif" alt="Your Image" />
+                        <img src="/unicap-events.jpg" alt="Your Image" />
                     </ImageContainer>
                     <form onSubmit={handleSubmit}>
                         <FormControl>
