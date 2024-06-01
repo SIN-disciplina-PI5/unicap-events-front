@@ -89,7 +89,7 @@ export function SideBar({ permissions }: SideBarProps) {
                     </IconExit>
                     <DrawerHeader>
                         <Header>
-                            <p>Instituto Humanitas</p>
+                            <p>Unicap Events</p>
                         </Header>
                     </DrawerHeader>
 
