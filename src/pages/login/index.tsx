@@ -18,10 +18,8 @@ export default function User() {
         if (token) {
             const expiration = localStorage.getItem('expiration');
             if (expiration && new Date(expiration) > new Date()) {
-                // Token válido, redirecionar para outra página protegida
                 router.push('/');
             } else {
-                // Token expirado, limpar local storage e redirecionar para tela de login
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('expiration');
                 router.push('/login');
@@ -31,7 +29,7 @@ export default function User() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true); // Define o estado de loading como true
+        setLoading(true); 
         try {
             const response = await axios.post('https://unicap-events-back-end.vercel.app/auth/login', {
                 email: email,
@@ -40,20 +38,17 @@ export default function User() {
 
             const token = response.data.data.token;
             const permission = response.data.data.permission;
-            console.log(permission)
-            const expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // Expira em um dia
-            // Armazenar o token e a data de expiração no local storage
+            const expiration = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); 
             localStorage.setItem('accessToken', token);
             localStorage.setItem('permission', permission);
-            localStorage.setItem('expiration', expiration.toISOString()); // Convertendo para string
+            localStorage.setItem('expiration', expiration.toISOString());
 
-            // Redirecionar para outra página protegida após o login
             router.push('/');
         } catch (error) {
             setError('Erro ao fazer login. Verifique suas credenciais.');
 
         } finally {
-            setLoading(false); // Define o estado de loading como false após o login ou erro
+            setLoading(false); 
         }
     };
 
