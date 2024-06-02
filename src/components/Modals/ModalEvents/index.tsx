@@ -42,7 +42,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
                 }
 
                 setLoading(true);
-                const response = await axios.get(`https://unicap-events-back-end.vercel.app/event/${eventId}`, {
+                const response = await axios.get(`https://unicap-events-backend-two.vercel.app/event/${eventId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -70,7 +70,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
             }
 
             setLoading(true);
-            await axios.put(`https://unicap-events-back-end.vercel.app/event/${evento.data.id}`, evento.data, {
+            await axios.put(`https://unicap-events-backend-two.vercel.app/event/${evento.data.id}`, evento.data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -105,7 +105,7 @@ const EventoDetails: React.FC<EventoDetailsProps> = ({ eventId, onClose }) => {
             }
 
             setLoading(true);
-            await axios.delete(`https://unicap-events-back-end.vercel.app/event/${evento.data.id}`, {
+            await axios.delete(`https://unicap-events-backend-two.vercel.app/event/${evento.data.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

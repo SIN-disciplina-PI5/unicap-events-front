@@ -54,7 +54,7 @@ const ModalCreateEvents: React.FC<ModalCreateEventsProps> = ({ isOpen, onClose, 
                 end_date: formatDateTime(formData.end_date),
             };
 
-            const response = await axios.post(`https://unicap-events-back-end.vercel.app/event/`, formattedFormData, {
+            const response = await axios.post(`https://unicap-events-backend-two.vercel.app/event/`, formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

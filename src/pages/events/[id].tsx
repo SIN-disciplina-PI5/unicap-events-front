@@ -57,7 +57,7 @@ const EventoDetailsPage: React.FC = () => {
     const fetchEventoPrincipal = async (token: string, eventId: number) => {
         setLoading(true);
         try {
-            const eventoResponse = await axios.get(`https://unicap-events-back-end.vercel.app/event/${eventId}`, {
+            const eventoResponse = await axios.get(`https://unicap-events-backend-two.vercel.app/event/${eventId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -76,7 +76,7 @@ const EventoDetailsPage: React.FC = () => {
     const fetchSubeventos = async (token: string, eventId: number) => {
         setLoading(true);
         try {
-            const subeventosResponse = await axios.get(`https://unicap-events-back-end.vercel.app/sub-event?eventId=${eventId}`, {
+            const subeventosResponse = await axios.get(`https://unicap-events-backend-two.vercel.app/sub-event?eventId=${eventId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

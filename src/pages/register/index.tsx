@@ -29,7 +29,7 @@ const Register: React.FC = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('https://unicap-events-back-end.vercel.app/auth/register', {
+            const response = await axios.post('https://unicap-events-backend-two.vercel.app/auth/register', {
                 name,
                 email,
                 password,

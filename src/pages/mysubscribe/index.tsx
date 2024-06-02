@@ -26,7 +26,7 @@ export default function Mysubscribe() {
                 return;
             }
 
-            const response = await axios.get('https://unicap-events-back-end.vercel.app/user/my-subscribe', {
+            const response = await axios.get('https://unicap-events-backend-two.vercel.app/user/my-subscribe', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
