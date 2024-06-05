@@ -201,6 +201,9 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>
+                    <Button colorScheme='yellow' mr={3} onClick={onClose}>
+                        Fechar
+                    </Button>
                     <Button colorScheme="red" mr={3} onClick={handleDelete} isLoading={loading}>
                         {loading ? <Spinner size="sm" color="yellow" /> : "Excluir"}
                     </Button>

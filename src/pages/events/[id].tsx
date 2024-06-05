@@ -6,7 +6,7 @@ import { Container, TitlePageId, TitleId, Main } from '../../styles/pages/events
 import { Button, Spinner, Flex, Table, Thead, Tbody, Tr, Th, Td, TableContainer, TableCaption } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import EventoDetails from '@/components/Modals/ModalEvents';
-import ModalCreateSubEvents from '@/components/Modals/ModalCreateSubEvents'; // Importando o novo modal
+import ModalCreateSubEvents from '@/components/Modals/ModalCreateSubEvents';
 import ModalEditSubEvent from '@/components/Modals/ModalSubEvents';
 
 interface Subevento {
@@ -172,41 +172,53 @@ const EventoDetailsPage: React.FC = () => {
                     </div>
                     <div>
                         <TableContainer>
-                            <Table variant='simple' colorScheme='red'>
-                                <TableCaption>Subeventos do Evento</TableCaption>
-                                <Thead>
-                                    <Tr>
-                                        <Th>Nome</Th>
-                                        <Th>Data Inicial</Th>
-                                        <Th>Data Final</Th>
-                                        <Th>Descrição</Th>
-                                        <Th>Localização</Th>
-                                        <Th>Ingressos</Th>
-                                        <Th>Ingressos Disponíveis</Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {subeventos.length > 0 ? subeventos.map(subevento => (
-                                            <Tr
-                                            key={subevento.id}
-                                            _hover={{ bg: 'red.100', boxShadow: 'md' }}
-                                            onClick={() => handleOpenEditModal(subevento.id)} // Adicione este evento de clique
-                                        >
-                                            <Td>{subevento.name}</Td>
-                                            <Td>{format(new Date(subevento.start_date), 'dd/MM/yyyy')}</Td>
-                                            <Td>{format(new Date(subevento.end_date), 'dd/MM/yyyy')}</Td>
-                                            <Td>{subevento.description}</Td>
-                                            <Td>{`Bloco: ${subevento.address.room}, Sala: ${subevento.address.block}`}</Td>
-                                            <Td>{subevento.quantity}</Td>
-                                            <Td>{subevento.tickets_available}</Td>
-                                        </Tr>
-                                    )) : (
+                            {loading ? (
+                                <Flex justify="center" align="center" height="600px">
+                                    <Spinner
+                                        thickness='10px'
+                                        speed='0.65s'
+                                        emptyColor='gray.200'
+                                        width={150}
+                                        height={150}
+                                        color='red.500' />
+                                </Flex>
+                            ) : (
+                                <Table variant='simple' colorScheme='red'>
+                                    <TableCaption>Subeventos do Evento</TableCaption>
+                                    <Thead>
                                         <Tr>
-                                            <Td colSpan={6}>Nenhum subevento encontrado.</Td>
+                                            <Th>Nome</Th>
+                                            <Th>Data Inicial</Th>
+                                            <Th>Data Final</Th>
+                                            <Th>Descrição</Th>
+                                            <Th>Localização</Th>
+                                            <Th>Ingressos</Th>
+                                            <Th>Ingressos Disponíveis</Th>
                                         </Tr>
-                                    )}
-                                </Tbody>
-                            </Table>
+                                    </Thead>
+                                    <Tbody>
+                                        {subeventos.length > 0 ? subeventos.map(subevento => (
+                                                <Tr
+                                                key={subevento.id}
+                                                _hover={{ bg: 'red.100', boxShadow: 'md' }}
+                                                onClick={() => handleOpenEditModal(subevento.id)}
+                                            >
+                                                <Td>{subevento.name}</Td>
+                                                <Td>{format(new Date(subevento.start_date), 'dd/MM/yyyy')}</Td>
+                                                <Td>{format(new Date(subevento.end_date), 'dd/MM/yyyy')}</Td>
+                                                <Td>{subevento.description}</Td>
+                                                <Td>{`Bloco: ${subevento.address.room}, Sala: ${subevento.address.block}`}</Td>
+                                                <Td>{subevento.quantity}</Td>
+                                                <Td>{subevento.tickets_available}</Td>
+                                            </Tr>
+                                        )) : (
+                                            <Tr>
+                                                <Td colSpan={7}>Nenhum subevento encontrado.</Td>
+                                            </Tr>
+                                        )}
+                                    </Tbody>
+                                </Table>
+                            )}
                         </TableContainer>
                     </div>
                 </Container>
@@ -225,4 +237,4 @@ const EventoDetailsPage: React.FC = () => {
     );
 };
 
-export default EventoDetailsPage
+export default EventoDetailsPage;
