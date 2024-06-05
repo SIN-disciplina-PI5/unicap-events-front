@@ -127,6 +127,43 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('accessToken');
+            if (!token) {
+                // Lógica para lidar com a falta de token
+                return;
+            }
+
+            await axios.delete(`https://unicap-events-backend.onrender.com/sub-event/${subEventId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            toast({
+                title: 'Subevento excluído com sucesso!',
+                description: "O subevento foi removido do sistema.",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+            });
+            onUpdateSubEvents(); // Atualiza a lista de subeventos após a exclusão
+            onClose();
+        } catch (error) {
+            console.error('Ocorreu um erro ao excluir o subevento:', error);
+            toast({
+                title: 'Erro ao excluir subevento!',
+                description: 'Ocorreu um erro ao excluir o subevento. Por favor, tente novamente mais tarde.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -134,16 +171,14 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
                 <ModalHeader>Editar Sub-Evento</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                <FormControl marginTop="20px">
+                    <FormControl marginTop="20px">
                         <FormLabel>Nome do sub-evento</FormLabel>
-                    <Input name="name" placeholder="Nome do sub-evento" value={formData.name} onChange={handleInputChange} />
+                        <Input name="name" placeholder="Nome do sub-evento" value={formData.name} onChange={handleInputChange} />
                     </FormControl>
                     <FormControl marginTop="20px">
                         <FormLabel>Descrição do sub-evento</FormLabel>
-                    <Input name="description" placeholder="Descrição do sub-evento" value={formData.description} onChange={handleInputChange}/>
+                        <Input name="description" placeholder="Descrição do sub-evento" value={formData.description} onChange={handleInputChange} />
                     </FormControl>
-
-                    
                     <FormControl marginTop="20px">
                         <FormLabel>Data e Hora Inicial</FormLabel>
                         <Input name="start_date" type="datetime-local" value={formData.start_date} onChange={handleInputChange} />
@@ -154,21 +189,20 @@ const ModalEditSubEvent: React.FC<ModalEditSubEventProps> = ({ isOpen, onClose, 
                     </FormControl>
                     <FormControl marginTop="20px">
                         <FormLabel>Bloco</FormLabel>
-                    <Input name="block" placeholder="Bloco" value={formData.block} onChange={handleInputChange} />
+                        <Input name="block" placeholder="Bloco" value={formData.block} onChange={handleInputChange} />
                     </FormControl>
                     <FormControl marginTop="20px">
                         <FormLabel>Sala</FormLabel>
-                    <Input name="room" placeholder="Sala" value={formData.room} onChange={handleInputChange}/>
+                        <Input name="room" placeholder="Sala" value={formData.room} onChange={handleInputChange} />
                     </FormControl>
                     <FormControl marginTop="20px">
                         <FormLabel>Quantidade de Ingressos</FormLabel>
-                    <Input name="quantity" type="number" placeholder="Quantidade de Ingressos" value={formData.quantity} onChange={handleInputChange} />
+                        <Input name="quantity" type="number" placeholder="Quantidade de Ingressos" value={formData.quantity} onChange={handleInputChange} />
                     </FormControl>
-
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="red" mr={3} onClick={onClose}>
-                        Cancelar
+                    <Button colorScheme="red" mr={3} onClick={handleDelete} isLoading={loading}>
+                        {loading ? <Spinner size="sm" color="yellow" /> : "Excluir"}
                     </Button>
                     <Button colorScheme="green" onClick={handleSubmit} isLoading={loading}>
                         {loading ? <Spinner size="sm" color="yellow" /> : "Salvar"}
