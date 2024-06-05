@@ -31,7 +31,7 @@ export default function User() {
         e.preventDefault();
         setLoading(true); 
         try {
-            const response = await axios.post('https://unicap-events-backend-two.vercel.app/auth/login', {
+            const response = await axios.post('https://unicap-events-backend.onrender.com/auth/login', {
                 email: email,
                 password: password
             });

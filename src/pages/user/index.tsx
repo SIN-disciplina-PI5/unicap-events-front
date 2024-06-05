@@ -42,7 +42,7 @@ export default function User() {
     const fetchUsuarios = async (token: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(`https://unicap-events-backend-two.vercel.app/user/`, {
+            const response = await axios.get(`https://unicap-events-backend.onrender.com/user/`, {
                 headers: { 
                     Authorization: `Bearer ${token}`,
                 },

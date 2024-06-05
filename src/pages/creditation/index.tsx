@@ -32,7 +32,7 @@ export default function Acreditation() {
     const fetchEventos = async (token: string) => {
         setLoading(true);
         try {
-            const response = await axios.get('https://unicap-events-backend-two.vercel.app/event/', {
+            const response = await axios.get('https://unicap-events-backend.onrender.com/event/', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -18,7 +18,7 @@ const TicketsPage: React.FC = () => {
             setLoading(true);
             try {
                 const token = localStorage.getItem('accessToken');
-                const response = await axios.get(`https://unicap-events-backend-two.vercel.app/sub-event/${subEventId}`, {
+                const response = await axios.get(`https://unicap-events-backend.onrender.com/sub-event/${subEventId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -37,7 +37,7 @@ const TicketsPage: React.FC = () => {
     const handleAccreditation = async (codigoIngresso: string) => {
         try {
             const token = localStorage.getItem('accessToken');
-            await axios.put(`https://unicap-events-backend-two.vercel.app/accreditation/${codigoIngresso}`, {}, {
+            await axios.put(`https://unicap-events-backend.onrender.com/accreditation/${codigoIngresso}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -35,7 +35,7 @@ const ModalPickTicket: React.FC<ModalPickTicketProps> = ({ isOpen, onClose, subE
                 return;
             }
 
-            const response = await axios.put(`https://unicap-events-backend-two.vercel.app/user/subscribe/${subEvent.id}`, null, {
+            const response = await axios.put(`https://unicap-events-backend.onrender.com/user/subscribe/${subEvent.id}`, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

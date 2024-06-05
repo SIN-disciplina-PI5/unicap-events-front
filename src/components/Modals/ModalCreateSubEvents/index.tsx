@@ -62,7 +62,7 @@ const ModalCreateSubEvents: React.FC<ModalCreateSubEventsProps> = ({ isOpen, onC
                 tickets: Array.from({ length: formData.quantity }, () => ({ status: 'available' })),
             };
 
-            const response = await axios.post('https://unicap-events-backend-two.vercel.app/sub-event/', formattedFormData, {
+            const response = await axios.post('https://unicap-events-backend.onrender.com/sub-event/', formattedFormData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
