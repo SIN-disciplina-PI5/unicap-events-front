@@ -39,7 +39,7 @@ export default function Home() {
         </TitlePageHome>
         <DescriptionContainer>
           <ProjectDescription>
-            O Unicap Events é uma plataforma desenvolvida por alunos do 5º período do curso de Sistemas para Internet da Universidade Católica de Pernambuco (UNICAP). Este projeto foi realizado como parte do Trabalho de Conclusão de Curso (TCC) e tem como objetivo facilitar a organização e a participação em eventos universitários.
+            O Unicap Events é uma plataforma desenvolvida por alunos do 5º período do curso de Sistemas para Internet da Universidade Católica de Pernambuco (UNICAP). Este projeto foi realizado como parte do Trabalho de Pesquisa Científica e Desenvolvimento Tecnológico (PCDT) e tem como objetivo facilitar a organização e a participação em eventos universitários.
           </ProjectDescription>
           <ProjectDescription>
             Nossa missão é proporcionar uma ferramenta intuitiva e eficaz para gerenciar eventos, conectar alunos e promover atividades acadêmicas e sociais dentro da universidade. Esperamos que esta plataforma contribua significativamente para a comunidade acadêmica e inspire futuras gerações de desenvolvedores.
