@@ -92,7 +92,12 @@ export default function User() {
                     </form>
                     <Link href="/register">
                         <p style={{ marginTop: '10px', display: 'block', textAlign: 'center', color: '#6A0014' }}>
-                            Não tem uma conta? Cadastre-se
+                            Não tem uma conta? <u>Cadastre-se</u>
+                        </p>
+                    </Link>
+                    <Link href="/easter-egg">
+                        <p style={{ display: 'block', textAlign: 'center', color: '#6A0014' }}>
+                            Veja mais sobre os criadores
                         </p>
                     </Link>
                 </LoginContainer>
